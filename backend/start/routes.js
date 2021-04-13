@@ -24,6 +24,7 @@ Route.get('/user/find/:id', 'UserController.list_by_id')
 
 // Rotas POST
 Route.post('/user/add', 'UserController.create')
+Route.post('/session', 'SessionController.create')
 
 // Rotas PUT
 Route.put('/user/update/:id', 'UserController.update')
