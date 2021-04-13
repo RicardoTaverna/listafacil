@@ -10,13 +10,11 @@ This is the boilerplate for creating an API server in AdonisJs, it comes pre-con
 
 ## Setup
 
-Use the adonis command to install the blueprint
+Para subir o projeto backend é necessário ter instalado o Docker e o Docker Compose
 
 ```bash
-adonis new yardstick --api-only
+docker-compose up --build
 ```
-
-or manually clone the repo and then run `npm install`.
 
 
 ### Migrations
@@ -26,3 +24,34 @@ Run the following command to run startup migrations.
 ```js
 adonis migration:run
 ```
+
+## Endpoints
+
+Abaixo estão listados todos os endpoints funcionais do projeto
+
+### User
+
+* Adicionar usuário:
+    [POST] /user/add
+    ```json
+    {
+        "username": "exemplo",
+        "email": "exemplo@exemplo.com",
+        "password": "exemplo"
+    }
+    ```
+* Listar usuários:
+    [GET] /user/all
+    [GET] /user/find/:id
+
+* Atualizar usuários:
+    [PUT] /user/update
+    ```json
+    {
+        "username": "exemplo",
+        "email": "exemplo@exemplo.com"
+    }
+    ```
+
+* Deletar usuário:
+    [DELETE] /user/delete/:id
