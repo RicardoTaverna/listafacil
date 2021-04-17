@@ -7,7 +7,6 @@ class ListSchema extends Schema {
   up () {
     this.create('lists', (table) => {
       table.increments()
-    
       table.integer('user_id').unsigned().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
       table.string('listname', 80).notNullable()
       table.text('descricao', 254).notNullable()

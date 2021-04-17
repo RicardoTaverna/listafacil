@@ -4,8 +4,6 @@ const List = use("App/Models/List");
 class ListController {
 
   async index ({params, auth, request, response}) {
-
-
     const list = await List.query().where('user_id', auth.user.id).fetch()
 
     return list
@@ -25,18 +23,12 @@ class ListController {
     const data = request.only([
       'listname',
       'descricao'
-
     ])
   
     const list = await List.create({ ...data, user_id: id })
   
     return list
   }
-
-
-
-
-
 
   async edit ({ params, request, response, view }) {
   }
@@ -47,7 +39,10 @@ class ListController {
     if (list.user_id !== auth.user.id) {
       return response.status(401).send({ error: 'Not authorized' })
     }
-    const data = request.only(["listname", "descricao"]);
+    const data = request.only([
+      "listname", 
+      "descricao"
+    ]);
 
     list.merge(data);
     await list.save();
