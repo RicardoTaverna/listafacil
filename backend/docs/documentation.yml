@@ -1,0 +1,172 @@
+swagger: "2.0"
+info:
+  description: "Documentação da API do app Listafacil"
+  version: "1.0.0"
+  title: "Listafacil"
+  termsOfService: "http://swagger.io/terms/"
+  contact:
+    email: "apiteam@listafacil.io"
+  license:
+    name: "MIT"
+    url: "www.github.com/RicardoTaverna/listafacil"
+host: "www.listafacil.io"
+basePath: "/v1"
+
+tags:
+- name: "list"
+  description: "Endpoints do objeto List"
+- name: "Product"
+  description: "Endpoints do objeto Product"
+- name: "User"
+  description: "Endpoints do objeto User"
+schemes:
+- "https"
+- "http"
+paths:
+  /list:
+    post:
+      tags:
+      - "list"
+      summary: "Adicionar uma nova lista"
+      description: ""
+      operationId: "list.store"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto lista a ser adicionado"
+        required: true
+        schema:
+          $ref: "#/definitions/List"
+      responses:
+        "405":
+          description: "Invalid input"
+    get:
+      tags:
+      - "list"
+      summary: "Retorna listas"
+      description: "Retorna todas as listas do usuário logado"
+      operationId: "list.index"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/List"
+        "400":
+          description: "Invalid status value"
+  /list/{listId}:
+    get:
+      tags:
+      - "list"
+      summary: "Buscar uma lista pelo ID"
+      description: "Retorna uma única lista"
+      operationId: "list.show"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "listId"
+        in: "path"
+        description: "Id da lista a ser retornada"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/List"
+        "400":
+          description: "Id inválido"
+        "404":
+          description: "Lista não encontrada"
+    put:
+      tags:
+      - "list"
+      summary: "Atualiza uma lista"
+      description: ""
+      operationId: "list.update"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "listId"
+        in: "path"
+        description: "Id da lista a ser deletada"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Lista a ser atualizada"
+        required: true
+        schema:
+          $ref: "#/definitions/List"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "list"
+      summary: "Deletar uma lista"
+      description: ""
+      operationId: "list.destroy"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "listId"
+        in: "path"
+        description: "Id da lista a ser deletada"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "List not found"
+definitions:
+  List:
+    type: "object"
+    required:
+    - "listname"
+    - "descricao"
+    properties:
+      listname:
+        type: "string"
+        example: "minha primeira lista"
+      name:
+        type: "string"
+        example: "compras dos dia 01/04"
+    xml:
+      name: "List"
+  Product:
+    type: "object"
+    properties:
+      id:
+        type: "integer"
+        format: "int64"
+      name:
+        type: "string"
+    xml:
+      name: "Category"
+  User:
+    type: "object"
+    required:
+    - "username"
+    - "email"
+    - "password"
+    properties:
+      username:
+        type: "string"
+      email:
+        type: "string"
+      password:
+        type: "string"
+    xml:
+      name: "User"
