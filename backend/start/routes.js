@@ -17,26 +17,24 @@
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
 const Route = use('Route')
 
-//Rotas Adonisjs
+// Outras rotas
+Route.get('/', () => {return { greeting: 'Hello world in JSON' }});
+
+//Rotas List
 Route.resource('list', 'ListController').apiOnly().middleware('auth')
 
-// Rotas GET
-Route.get('/', () => {return { greeting: 'Hello world in JSON' }});
-Route.get('/user/all', 'UserController.list_all');
-Route.get('/user/find/:id', 'UserController.list_by_id');
+// Rotas Product
 Route.get('/product/get_products', 'ProductController.get_product');
 Route.get('/product', 'ProductController.index');
-
-
-// Rotas POST
-Route.post('/user/add', 'UserController.create');
-Route.post('/session', 'SessionController.create');
 Route.post('/product', 'ProductController.create')
-
-// Rotas PUT
-Route.put('/user/update/:id', 'UserController.update');
 Route.put('/product/:id', 'ProductController.update')
-
-// Rotas DELETE
-Route.delete('/user/delete/:id', 'UserController.delete');
 Route.delete('/product/:id', 'ProductController.delete');
+
+
+// Rotas User
+Route.get('/user', 'UserController.list_all');
+Route.get('/user/:id', 'UserController.list_by_id');
+Route.post('/user', 'UserController.create');
+Route.put('/user/:id', 'UserController.update');
+Route.delete('/user/:id', 'UserController.delete');
+Route.post('/session', 'SessionController.create');
