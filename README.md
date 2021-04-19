@@ -34,6 +34,7 @@
     * [Pré-requisitos](#pré-requisitos)
     * [Execução](#execução)
         * [Executar Backend](#Executar-Backend)
+* [Endpoints](#endpoints)
 
 
 ## 🛠 Tecnologias
@@ -91,3 +92,6 @@ $ docker-compose up --build
 # o servidor web iniciará 0.0.0.0:3333
 # o banco de dados iniciara 0.0.0.0:3060
 ```
+
+## Endpoints
+A documentação no padrão OpenAPI você encontra [aqui](/backend/docs/documentation.yml)
