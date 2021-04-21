@@ -20,6 +20,7 @@ const Route = use('Route')
 // Outras rotas
 Route.get('/', () => {return { greeting: 'Hello world in JSON' }});
 
+
 //Rotas List
 Route.resource('list', 'ListController').apiOnly().middleware('auth')
 

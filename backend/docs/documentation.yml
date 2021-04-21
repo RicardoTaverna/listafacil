@@ -13,7 +13,7 @@ host: "www.listafacil.io"
 basePath: "/v1"
 
 tags:
-- name: "list"
+- name: "List"
   description: "Endpoints do objeto List"
 - name: "Product"
   description: "Endpoints do objeto Product"
@@ -26,7 +26,7 @@ paths:
   /list:
     post:
       tags:
-      - "list"
+      - "List"
       summary: "Adicionar uma nova lista"
       description: ""
       operationId: "list.store"
@@ -46,7 +46,7 @@ paths:
           description: "Invalid input"
     get:
       tags:
-      - "list"
+      - "List"
       summary: "Retorna listas"
       description: "Retorna todas as listas do usuário logado"
       operationId: "list.index"
@@ -64,7 +64,7 @@ paths:
   /list/{listId}:
     get:
       tags:
-      - "list"
+      - "List"
       summary: "Buscar uma lista pelo ID"
       description: "Retorna uma única lista"
       operationId: "list.show"
@@ -88,7 +88,7 @@ paths:
           description: "Lista não encontrada"
     put:
       tags:
-      - "list"
+      - "List"
       summary: "Atualiza uma lista"
       description: ""
       operationId: "list.update"
@@ -112,7 +112,7 @@ paths:
           description: "Invalid input"
     delete:
       tags:
-      - "list"
+      - "List"
       summary: "Deletar uma lista"
       description: ""
       operationId: "list.destroy"
@@ -130,6 +130,238 @@ paths:
           description: "Invalid ID supplied"
         "404":
           description: "List not found"
+  /product:
+    post:
+      tags:
+      - "Product"
+      summary: "Adicionar um novo produto"
+      description: ""
+      operationId: "product.create"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Produto Criado"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        "405":
+          description: "Invalid input"
+    get:
+      tags:
+      - "Product"
+      summary: "Retorna Produtos"
+      description: "Retorna todos os produtos"
+      operationId: "product.index"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+        "400":
+          description: "Invalid status value"
+  /product/{productId}:
+    get:
+      tags:
+      - "Product"
+      summary: "Buscar um produto pelo ID"
+      description: "Retorna um único produto"
+      operationId: "product.show"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "Id do produto a ser retornado"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/Product"
+        "400":
+          description: "Id inválido"
+        "404":
+          description: "Product não encontrado"
+    put:
+      tags:
+      - "Product"
+      summary: "Atualiza uma lista"
+      description: ""
+      operationId: "product.update"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "Id do produto a ser atualizado"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Produto a ser atualizado"
+        required: true
+        schema:
+          $ref: "#/definitions/Product"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "Product"
+      summary: "Deletar um produto"
+      description: ""
+      operationId: "product.destroy"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "productId"
+        in: "path"
+        description: "Id do produto a ser deletado"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "Product not found"
+  /product/get_products:
+    get:
+      tags:
+      - "Product"
+      summary: "Buscar os produtos na API"
+      description: "Retorna os produtos da API"
+      operationId: "product.get_product"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/Product"
+        "400":
+          description: "Invalid status value"
+  /user:
+    post:
+      tags:
+      - "User"
+      summary: "Adicionar um novo usuario"
+      description: ""
+      operationId: "user.create"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "body"
+        description: "Objeto usuario foi adicionado"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
+    get:
+      tags:
+      - "User"
+      summary: "Retorna user"
+      description: "Retorna todos os usuarios "
+      operationId: "user.list_all"
+      produces:
+      - "application/json"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            type: "array"
+            items:
+              $ref: "#/definitions/User"
+        "400":
+          description: "Invalid status value"
+  /user/{userId}:
+    get:
+      tags:
+      - "User"
+      summary: "Buscar uma usuario pelo ID"
+      description: "Retorna um único usuario"
+      operationId: "user.list_by_id"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "Id do usuario a ser retornado"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "200":
+          description: "successful operation"
+          schema:
+            $ref: "#/definitions/User"
+        "400":
+          description: "Id inválido"
+        "404":
+          description: "Usuario não encontrado"
+    put:
+      tags:
+      - "User"
+      summary: "Atualiza o usuario"
+      description: ""
+      operationId: "user.update"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "Id do usuario a ser atualizado"
+        required: true
+        type: "integer"
+        format: "int64"
+      - in: "body"
+        name: "body"
+        description: "Usuario a ser atualizado"
+        required: true
+        schema:
+          $ref: "#/definitions/User"
+      responses:
+        "405":
+          description: "Invalid input"
+    delete:
+      tags:
+      - "User"
+      summary: "Deletar um usuario"
+      description: ""
+      operationId: "user.delete"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "userId"
+        in: "path"
+        description: "Id do usuario a ser deletado"
+        required: true
+        type: "integer"
+        format: "int64"
+      responses:
+        "400":
+          description: "Invalid ID supplied"
+        "404":
+          description: "User not found"
 definitions:
   List:
     type: "object"
