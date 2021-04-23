@@ -28,9 +28,9 @@ class ListController {
   async show ({ params, auth, response }) {
     const list = await List.query().where('id', params.id).with('products').fetch();
     
-    let list_object = {...list};
+    let user_id = list.rows[0].user_id;
 
-    if (list_object.rows[0].user_id != auth.user.id) {
+    if (user_id != auth.user.id) {
       return response.status(401).send({ error: 'Not authorized'})
     }
 
