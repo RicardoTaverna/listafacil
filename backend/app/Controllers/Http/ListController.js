@@ -18,20 +18,26 @@ class ListController {
   }
 
   /**
-	 * Show a list of all lists.
-	 * GET lists
+	 * Show a unic list with products.
+	 * GET list
 	 *
 	 * @param {object} ctx
    * @param {auth} ctx.auth
 	 * @param {Response} ctx.response
 	 */
   async show ({ params, auth, response }) {
-    const list = await List.findOrFail(params.id)
-    if (list.user_id !== auth.user.id) {
-      return response.status(401).send({ error: 'Not authorized' })
+    const list = await List.query().where('id', params.id).with('products').fetch();
+    
+    let list_object = {...list};
+
+    if (list_object.rows[0].user_id != auth.user.id) {
+      return response.status(401).send({ error: 'Not authorized'})
     }
-  
-    return list
+
+    response.status(200).json({
+      data: list
+    })
+
   }
 
   /**
@@ -44,12 +50,14 @@ class ListController {
 	 */
   async store ({ auth, request, response }) {
     const { id } = auth.user
-    const data = request.only([
-      'listname',
-      'descricao'
-    ])
+    const { listname, descricao, products } = request.post()
   
-    const list = await List.create({ ...data, user_id: id })
+    const list = await List.create({ listname, descricao, user_id: id })
+
+    if (products && products.length > 0) {
+      await list.products().attach(products)
+      list.products = await list.products().fetch()
+    }
   
     return list
   }
@@ -71,13 +79,19 @@ class ListController {
     if (list.user_id !== auth.user.id) {
       return response.status(401).send({ error: 'Not authorized' })
     }
-    const data = request.only([
-      "listname", 
-      "descricao"
-    ]);
 
-    list.merge(data);
+    const { listname, descricao, products } = request.post()
+
+    list.listname = listname || list.listname
+    list.descricao = descricao || list.descricao
+ 
     await list.save();
+
+    if(products && products.length > 0) {
+      await list.products().detach()
+      await list.products().attach(products)
+      list.products = await list.products().fetch()
+    }
 
     return list;
   }

@@ -7,6 +7,10 @@ class List extends Model {
     user () {
         return this.belongsTo('App/Models/User')
       }
+    
+    products(){
+        return  this.belongsToMany('App/Models/Product')
+    }
 
 }
 
