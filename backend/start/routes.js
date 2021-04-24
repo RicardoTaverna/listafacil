@@ -27,9 +27,9 @@ Route.resource('list', 'ListController').apiOnly().middleware('auth')
 // Rotas Product
 Route.get('/product/get_products', 'ProductController.get_product');
 Route.get('/product', 'ProductController.index');
-Route.post('/product', 'ProductController.create')
-Route.put('/product/:id', 'ProductController.update')
-Route.delete('/product/:id', 'ProductController.delete');
+Route.post('/product', 'ProductController.create');
+Route.put('/product/:id', 'ProductController.update').middleware(['findProduct']);
+Route.delete('/product/:id', 'ProductController.delete').middleware(['findProduct']);
 
 
 // Rotas User
