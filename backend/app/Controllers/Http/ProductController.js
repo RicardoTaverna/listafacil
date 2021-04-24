@@ -79,7 +79,25 @@ class ProductController {
 	* @return {Request} cBrief description of the returning value here.
 	*/  
 	async get_product({ params, request }){
-		const data = await axios.get('https://menorpreco.notaparana.pr.gov.br/api/v1/produtos');
+		const url = 'https://menorpreco.notaparana.pr.gov.br/api/v1/produtos';
+		const headers = {'Access-Control-Allow-Origin': '*'}
+		const data = await axios.get(
+			url, 
+			headers
+			).then(function(response) {
+				console.log('response is : ' + response);
+			}).catch(function(error) {
+				if(error.response){
+					console.log(error.response.headers);
+				}
+				else if(error.request){
+					console.log(error.request);
+				}
+				else {
+					console.log(error.message);
+				}
+				console.log(error.config);
+			});
 		return data;
 	}
 }
