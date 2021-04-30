@@ -1,0 +1,30 @@
+.login-card {
+    width: 30rem;
+    border: 1px solid #292929;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 20px;
+    box-sizing: border-box;
+    background-color: #292929;
+    -webkit-box-shadow: 0px 0px 15px 3px #000000; 
+    box-shadow: 0px 0px 15px 3px #000000;
+}
+
+.logo-image {
+    display: block;
+	margin: auto;
+    max-width: 75%;
+}
+
+.link {
+    color: #f7f7ff;
+    text-decoration: none;
+}
+
+.link:hover {
+    color: #49c7ab;
+}
+
+.topnav {
+	overflow: hidden;
+}
