@@ -25,6 +25,23 @@ class ProductController {
 		return product;
 	}
 
+	  /**
+	 * Show a unic list with products.
+	 * GET list
+	 *
+	 * @param {object} ctx
+   	 * @param {auth} ctx.auth
+	 * @param {Response} ctx.response
+	 */
+	async show ({ params, response }) {
+		const product = await Product.findOrFail(params.id);
+				
+		response.status(200).json({
+		  	data: product
+		})
+	
+	}
+
 	/**
 	 * Create/save a new product.
 	 * POST products
@@ -50,9 +67,12 @@ class ProductController {
 	 */
 	async update ({ params, request, response }) {
 		const product = await Product.findOrFail(params.id);
-		const data = request.only(["value"]);
+		const { name, value, stablishment } = request.post();
+
+		product.name = name || product.name;
+		product.value = value || product.value;
+		product.stablishment = stablishment || product.stablishment;
 		
-		product.merge(data);
 		await product.save();
 
 		return product;
@@ -79,23 +99,35 @@ class ProductController {
 	* @return {Request} cBrief description of the returning value here.
 	*/  
 	async get_product({ params, request }){
-		const url = 'https://menorpreco.notaparana.pr.gov.br/api/v1/produtos';
-		const headers = {'Access-Control-Allow-Origin': '*'}
+		const url = 'https://menorpreco.notaparana.pr.gov.br/api/v1/produtos?local=6gkzqf9vb&termo=leite%20tirol&categoria=2&offset=0&raio=20&data=-1&ordem=0';
+		const token = 'u7fsQqgiuEdGbBWLKxF-H8s4.%2BQ3hn1M%2FR1gIUfuRq%2B%2FkBGZD1%2BaYN%2FDJutcD%2BHIQIbo';
+		const headers = {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+			'Cookie': "sessionid=u7fsQqgiuEdGbBWLKxF-H8s4.%2BQ3hn1M%2FR1gIUfuRq%2B%2FkBGZD1%2BaYN%2FDJutcD%2BHIQIbo"
+		}
+		const withCredentials = {withCredentials:true}
 		const data = await axios.get(
-			url, 
-			headers
+			url,
+			headers,
+			withCredentials
 			).then(function(response) {
+				console.log('Funcionei')
 				console.log('response is : ' + response);
 			}).catch(function(error) {
 				if(error.response){
+					console.log('Erro: retornado response.headers')
 					console.log(error.response.headers);
 				}
 				else if(error.request){
+					console.log('Erro: retornado request')
 					console.log(error.request);
 				}
 				else {
+					console.log('Erro: retornado message')
 					console.log(error.message);
 				}
+				console.log('Erro: retornado config')
 				console.log(error.config);
 			});
 		return data;
