@@ -53,7 +53,7 @@ class Register extends React.Component {
                 this.setState(
                     {messageError: "Ocorreu um erro ao registrar sua conta. T.T"},
                     () => this.showError()
-                    );
+                );
             }
         }
     };
