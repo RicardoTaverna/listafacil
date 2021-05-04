@@ -6,7 +6,6 @@ import { login } from "../../services/auth";
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
-import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import './login.css';
 
