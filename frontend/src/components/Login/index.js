@@ -6,6 +6,8 @@ import { login } from "../../services/auth";
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
+import { Dialog } from 'primereact/dialog';
+import { Toast } from 'primereact/toast';
 import './login.css';
 
 class Login extends React.Component {
@@ -15,15 +17,19 @@ class Login extends React.Component {
         this.state = {
             email: "",
             password: "",
-            error: "",
+            messageError: "",
         };
         this.onLogin = this.onLogin.bind(this);
+        this.showError = this.showError.bind(this);
     }
 
     onLogin = async e => {
         const { email, password } = this.state;
         if (!email || !password) {
-            this.setState({ error: "Preencha e-mail e senha para continuar!" });
+            this.setState(
+                {messageError: "Preencha e-mail e senha para continuar!"},
+                () => this.showError()
+            );
         } else {
             try {
                 const response = await api.post("/session", { email, password });
@@ -31,17 +37,21 @@ class Login extends React.Component {
                 this.props.history.push("/app");
                 
             } catch (err) {
-                this.setState({
-                error:
-                    "Houve um problema com o login, verifique suas credenciais. T.T"
-                });
+                this.setState(
+                    {messageError: "Houve um problema com o login, verifique suas credenciais. T.T"},
+                    () => this.showError()
+                );
             }
         }
     };
 
+    showError() {
+        this.toast.show({severity:'error', summary: 'Error', detail: this.state.messageError , life: 3000});
+    }
     render() {
         return (
             <React.Fragment>
+                <Toast ref={(el) => this.toast = el} />
                 <div class="topnav">
                     <div>
                         <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>

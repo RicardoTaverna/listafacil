@@ -7,11 +7,8 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
 import { Dialog } from 'primereact/dialog';
+import { Toast } from 'primereact/toast';
 import './register.css';
-
-
-
-
 
 class Register extends React.Component {
 
@@ -23,44 +20,44 @@ class Register extends React.Component {
             email: "",
             password: "",
             passwordconfirm: "",
-            error: "",
+            messageError: "",
+            
         };
         this.onSignUp = this.onSignUp.bind(this);
-        this.onClick = this.onClick.bind(this);
         this.onHide = this.onHide.bind(this);
+        this.showError = this.showError.bind(this);
     }
 
     onSignUp = async e => {
         
         const { username, email, password, passwordconfirm } = this.state;
         if (!email || !password || !username || !passwordconfirm ) {
-            this.setState({ error: "Para realizar seu cadastro preencha todos os campos!" });
+            this.setState(
+                {messageError: "Para realizar seu cadastro preencha todos os campos!"},
+                () => this.showError()
+            );
+
         } else if(password !== passwordconfirm) {
-            this.setState({ error: "Senhas não coincidem!" });
-        }else{
+            this.setState(
+                {messageError: "Senhas não coincidem!" },
+                () => this.showError()
+                );
+
+        } else{
             try {
                 await api.post("/user", { username, email, password });
                 this.setState({displayBasic: true});
+
             } catch (err) {
                 console.log(err);
-                this.setState({error: "Ocorreu um erro ao registrar sua conta. T.T"});
+                this.setState(
+                    {messageError: "Ocorreu um erro ao registrar sua conta. T.T"},
+                    () => this.showError()
+                    );
             }
         }
     };
-    onClick(name, position) {
-        let state = {
-            [`${name}`]: true
-        };
 
-        if (position) {
-            state = {
-                ...state,
-                position
-            }
-        }
-
-        this.setState(state);
-    }
     onHide(name) {
         this.setState({
             [`${name}`]: false
@@ -68,17 +65,25 @@ class Register extends React.Component {
     }
 
     renderFooter(name) {
+
         return (
             <div className="p-d-flex p-jc-center">
                 <Button label="OK" className="p-button-text" autoFocus onClick={() => this.props.history.push("/app")} />
             </div>
         );
     }
+
+
+    showError() {
+        this.toast.show({severity:'error', summary: 'Error', detail: this.state.messageError , life: 3000});
+    }
     
 
     render() {
         return (
+        
             <React.Fragment>
+                <Toast ref={(el) => this.toast = el} />
                 <div class="topnav">
                     <div>
                         <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
@@ -103,7 +108,6 @@ class Register extends React.Component {
                                 <img src={logo} alt="listafácil" className="logo-image"></img>
                             </div>                            
                             <form className="p-my-6" >
-                                {this.state.error && <p>{this.state.error}</p>}
                                 <div className="p-field p-mt-2">
                                     
                                     <span className="p-float-label p-mb-4">
