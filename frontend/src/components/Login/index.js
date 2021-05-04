@@ -82,7 +82,7 @@ class Login extends React.Component {
                             </form>
                             <Button label="Login" className="p-my-3 p-shadow-14" onClick={this.onLogin} />
                             <div className="p-text-center">
-                                <p>Não possui uma conta ainda? <a href="/" className="link">Crie Agora</a></p>
+                                <p>Não possui uma conta ainda? <a href="/cadastro" className="link">Crie Agora</a></p>
                             </div>
                         </div>
                     </div>
