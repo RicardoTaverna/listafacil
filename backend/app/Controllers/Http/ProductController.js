@@ -99,14 +99,11 @@ class ProductController {
 	* @return {Request} cBrief description of the returning value here.
 	*/  
 	async get_product({ params, request }){
-		const url = 'https://menorpreco.notaparana.pr.gov.br/api/v1/produtos?local=6gkzqf9vb&termo=leite%20tirol&categoria=2&offset=0&raio=20&data=-1&ordem=0';
-		const token = 'u7fsQqgiuEdGbBWLKxF-H8s4.%2BQ3hn1M%2FR1gIUfuRq%2B%2FkBGZD1%2BaYN%2FDJutcD%2BHIQIbo';
+		const url = 'http://ricardotaverna.pythonanywhere.com/api/v1/produtos/';
 		const headers = {
 			Accept: 'application/json',
 			'Content-Type': 'application/json',
-			'Cookie': "sessionid=u7fsQqgiuEdGbBWLKxF-H8s4.%2BQ3hn1M%2FR1gIUfuRq%2B%2FkBGZD1%2BaYN%2FDJutcD%2BHIQIbo"
 		}
-		const withCredentials = {withCredentials:true}
 		const data = await axios.get(
 			url,
 			headers,
