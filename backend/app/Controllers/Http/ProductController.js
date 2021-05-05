@@ -25,6 +25,23 @@ class ProductController {
 		return product;
 	}
 
+	  /**
+	 * Show a unic list with products.
+	 * GET list
+	 *
+	 * @param {object} ctx
+	 * @param {auth} ctx.auth
+	 * @param {Response} ctx.response
+	 */
+	async show ({ params, response }) {
+		const product = await Product.findOrFail(params.id);
+				
+		response.status(200).json({
+		  	data: product
+		})
+	
+	}
+
 	/**
 	 * Create/save a new product.
 	 * POST products
@@ -50,9 +67,12 @@ class ProductController {
 	 */
 	async update ({ params, request, response }) {
 		const product = await Product.findOrFail(params.id);
-		const data = request.only(["value"]);
+		const { name, value, stablishment } = request.post();
+
+		product.name = name || product.name;
+		product.value = value || product.value;
+		product.stablishment = stablishment || product.stablishment;
 		
-		product.merge(data);
 		await product.save();
 
 		return product;
@@ -79,7 +99,34 @@ class ProductController {
 	* @return {Request} cBrief description of the returning value here.
 	*/  
 	async get_product({ params, request }){
-		const data = await axios.get('https://menorpreco.notaparana.pr.gov.br/api/v1/produtos');
+		const url = 'http://ricardotaverna.pythonanywhere.com/api/v1/produtos/';
+		const headers = {
+			Accept: 'application/json',
+			'Content-Type': 'application/json',
+		}
+		const data = await axios.get(
+			url,
+			headers,
+			withCredentials
+			).then(function(response) {
+				console.log('Funcionei')
+				console.log('response is : ' + response);
+			}).catch(function(error) {
+				if(error.response){
+					console.log('Erro: retornado response.headers')
+					console.log(error.response.headers);
+				}
+				else if(error.request){
+					console.log('Erro: retornado request')
+					console.log(error.request);
+				}
+				else {
+					console.log('Erro: retornado message')
+					console.log(error.message);
+				}
+				console.log('Erro: retornado config')
+				console.log(error.config);
+			});
 		return data;
 	}
 }
