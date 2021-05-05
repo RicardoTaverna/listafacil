@@ -30,7 +30,7 @@ class ProductController {
 	 * GET list
 	 *
 	 * @param {object} ctx
-   	 * @param {auth} ctx.auth
+	 * @param {auth} ctx.auth
 	 * @param {Response} ctx.response
 	 */
 	async show ({ params, response }) {
