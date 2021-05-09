@@ -1,5 +1,5 @@
 import React from 'react';
-import './home.css';
+import './frontpage.css';
 import logo from '../../images/ListaFácil_removebg.png';
 import { Button } from 'primereact/button';
 
