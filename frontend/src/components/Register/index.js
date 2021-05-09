@@ -83,64 +83,68 @@ class Register extends React.Component {
         return (
         
             <React.Fragment>
-                <Toast ref={(el) => this.toast = el} />
-                <div class="topnav">
-                    <div>
-                        <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
-                    </div>
-                </div>
-                <div className="form-demo">
-                    <Dialog header="Header" visible={this.state.displayBasic}  footer={this.renderFooter('displayBasic')} onHide={() => this.onHide('displayBasic')} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
-                        <div className="p-d-flex p-ai-center p-dir-col p-pt-6 p-px-3">
-                            <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
-                            <h5>Registrado!</h5>
-                            <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
-                                Sua conta foi criada com sucesso!
-                            </p>
-                        </div>          
-                    </Dialog>
-                </div>
-                <div className="p-d-flex p-jc-center p-mt-2">
-
-                    <div className="registro-card">
-                        <div className="p-fluid p-jc-center">
-                            <div className="p-mb-2">
-                                <img src={logo} alt="listafácil" className="logo-image"></img>
-                            </div>                            
-                            <form className="p-my-6" >
-                                <div className="p-field p-mt-2">
-                                    
-                                    <span className="p-float-label p-mb-4">
-                                        <InputText id="email" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} />
-                                        <label htmlFor="email">Endereço de E-mail*</label>
-                                    </span>
-                                </div>
-                                <div className="p-field">
-                                    <span className="p-float-label">
-                                        <InputText className="p-m-auto" value={this.state.username} onChange={(e) => this.setState({username: e.target.value})} />
-                                        <label htmlFor="username">Usuario*</label>
-                                    </span>
-                                </div>
-
-                                <div className="p-field">
-                                    <span className="p-float-label">
-                                        <Password className="p-m-auto" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} toggleMask feedback={true}/>
-                                        <label htmlFor="password">Senha*</label>
-                                    </span>
-                                </div>
-                                <div className="p-field">
-                                    <span className="p-float-label">
-                                        <Password className="p-m-auto" value={this.state.passwordconfirm} onChange={(e) => this.setState({passwordconfirm: e.target.value})} toggleMask feedback={false}/>
-                                        <label htmlFor="passwordconfirm">Confirmar Senha</label>
-                                    </span>
-                                </div>
-                                
-                            </form>
-                            <Button label="Registre-se" className="p-my-3 p-shadow-14" onClick={this.onSignUp } />
+                <section className="full-container">
+                    <Toast ref={(el) => this.toast = el} />
+                    <div class="topnav">
+                        <div>
+                            <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
                         </div>
                     </div>
-                </div>
+                    <div className="form-demo">
+                        <Dialog header="Header" visible={this.state.displayBasic}  footer={this.renderFooter('displayBasic')} onHide={() => this.onHide('displayBasic')} showHeader={false} breakpoints={{ '960px': '80vw' }} style={{ width: '30vw' }}>
+                            <div className="p-d-flex p-ai-center p-dir-col p-pt-6 p-px-3">
+                                <i className="pi pi-check-circle" style={{ fontSize: '5rem', color: 'var(--green-500)' }}></i>
+                                <h5>Registrado!</h5>
+                                <p style={{ lineHeight: 1.5, textIndent: '1rem' }}>
+                                    Sua conta foi criada com sucesso!
+                                </p>
+                            </div>          
+                        </Dialog>
+                    </div>
+                    <div className="p-d-flex p-jc-center">
 
+                        <div className="registro-card">
+                            <div className="p-fluid p-jc-center">
+                                <div className="p-mb-2">
+                                    <img src={logo} alt="listafácil" className="logo-image"></img>
+                                </div>                            
+                                <form className="p-my-6" >
+                                    <div className="p-field p-mt-2">
+                                        
+                                        <span className="p-float-label p-mb-4">
+                                            <InputText id="email" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} />
+                                            <label htmlFor="email">Endereço de E-mail*</label>
+                                        </span>
+                                    </div>
+                                    <div className="p-field">
+                                        <span className="p-float-label">
+                                            <InputText className="p-m-auto" value={this.state.username} onChange={(e) => this.setState({username: e.target.value})} />
+                                            <label htmlFor="username">Usuario*</label>
+                                        </span>
+                                    </div>
+
+                                    <div className="p-field">
+                                        <span className="p-float-label">
+                                            <Password className="p-m-auto" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} toggleMask feedback={true}/>
+                                            <label htmlFor="password">Senha*</label>
+                                        </span>
+                                    </div>
+                                    <div className="p-field">
+                                        <span className="p-float-label">
+                                            <Password className="p-m-auto" value={this.state.passwordconfirm} onChange={(e) => this.setState({passwordconfirm: e.target.value})} toggleMask feedback={false}/>
+                                            <label htmlFor="passwordconfirm">Confirmar Senha</label>
+                                        </span>
+                                    </div>
+                                    
+                                </form>
+                                <Button label="Registre-se" className="p-my-3 p-shadow-14" onClick={this.onSignUp } />
+                                <div className="p-text-center">
+                                    <p>Já possui uma conta? <a href="/login" className="link">Faça Login Aqui</a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </section>
             </React.Fragment>
         )
     }

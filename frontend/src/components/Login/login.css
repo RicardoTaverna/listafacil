@@ -1,3 +1,17 @@
+html, body {
+    height: 100%;
+}
+
+.full-container {
+    height: 100%;
+    padding-bottom: 330px;
+    background: hsla(167, 53%, 53%, 1);
+    background: linear-gradient(180deg, hsla(167, 53%, 53%, 1) 15%, hsla(231, 44%, 40%, 1) 100%);
+    background: -moz-linear-gradient(180deg, hsla(167, 53%, 53%, 1) 15%, hsla(231, 44%, 40%, 1) 100%);
+    background: -webkit-linear-gradient(180deg, hsla(167, 53%, 53%, 1) 15%, hsla(231, 44%, 40%, 1) 100%);
+    filter: progid: DXImageTransform.Microsoft.gradient( startColorstr="#49C7AB", endColorstr="#3A4894", GradientType=1 );
+}
+
 .login-card {
     width: 30rem;
     border: 1px solid #292929;

@@ -7,20 +7,20 @@ class Home extends React.Component {
     render() {       
         return (
         <React.Fragment>
-            <div class="topnav">
-                <div class="align-right" style={{'margin-right':'2rem'}}>
-                    <a class="active" href="/login">Login</a>
+            <div className="topnav">
+                <div className="align-right" style={{'margin-right':'2rem'}}>
+                    <a className="active" href="/login">Login</a>
                     <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
                     <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
                 </div>
             </div>
 
-            <header>
-                <div>
-                    <h1 className="mt-3 text-center">Bem vindo ao</h1>
+            <header className="header-container">
+                <div className="header-parallax p-px-4">
+                    <h1 className="text-center">Bem vindo ao</h1>
                         
                     <img src={logo} alt="listafácil" className="header-image"></img>
-                    <h3 className="mt-3 text-center">
+                    <h3 className="text-center p-mt-5">
                         Crie agora sua conta e faça sua primeira lista de compras inteligente!
                     </h3>
                     <div className="mt-3 text-center">
@@ -30,7 +30,7 @@ class Home extends React.Component {
                 </div>
             </header>
 
-            <div className="footer">
+            <div className="footer p-mt-6">
                 <p className="footer-text">CRIADO POR RICARDO TAVERNA & YGOR STENGRAT</p>
                 <Button className="p-button-primary p-button-text">
                     <i className="pi pi-github p-px-3"></i>
