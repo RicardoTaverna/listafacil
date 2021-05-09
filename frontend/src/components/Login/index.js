@@ -50,43 +50,44 @@ class Login extends React.Component {
     render() {
         return (
             <React.Fragment>
-                <Toast ref={(el) => this.toast = el} />
-                <div class="topnav">
-                    <div>
-                        <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
+                <section className="full-container">
+                    <Toast ref={(el) => this.toast = el} />
+                    <div className="topnav">
+                        <div>
+                            <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
+                        </div>
                     </div>
-                </div>
 
-                <div className="p-d-flex p-jc-center p-mt-2">
-                    <div className="login-card">
-                        <div className="p-fluid p-jc-center">
-                            <div className="p-mb-2">
-                                <img src={logo} alt="listafácil" className="logo-image"></img>
-                            </div>                            
-                            <form className="p-my-6">
-                                <div className="p-field p-mt-2">
-                                    <span className="p-float-label p-mb-4">
-                                        <InputText id="email" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} />
-                                        <label htmlFor="email">Endereço de E-mail</label>
-                                    </span>
-                                </div>
+                    <div className="p-d-flex p-jc-center p-mt-2">
+                        <div className="login-card">
+                            <div className="p-fluid p-jc-center">
+                                <div className="p-mb-2">
+                                    <img src={logo} alt="listafácil" className="logo-image"></img>
+                                </div>                            
+                                <form className="p-my-6">
+                                    <div className="p-field p-mt-2">
+                                        <span className="p-float-label p-mb-4">
+                                            <InputText id="email" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} />
+                                            <label htmlFor="email">Endereço de E-mail</label>
+                                        </span>
+                                    </div>
 
-                                <div className="p-field">
-                                    <span className="p-float-label">
-                                        <Password className="p-m-auto" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} toggleMask feedback={false}/>
-                                        <label htmlFor="password">Password*</label>
-                                    </span>
+                                    <div className="p-field">
+                                        <span className="p-float-label">
+                                            <Password className="p-m-auto" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} toggleMask feedback={false}/>
+                                            <label htmlFor="password">Password*</label>
+                                        </span>
+                                    </div>
+                                    <a href="/#" className="link p-my-2">Esqueci minha senha</a>
+                                </form>
+                                <Button label="Login" className="p-my-3 p-shadow-14" onClick={this.onLogin} />
+                                <div className="p-text-center">
+                                    <p>Não possui uma conta ainda? <a href="/cadastro" className="link">Crie Agora</a></p>
                                 </div>
-                                <a href="/#" className="link p-my-2">Esqueci minha senha</a>
-                            </form>
-                            <Button label="Login" className="p-my-3 p-shadow-14" onClick={this.onLogin} />
-                            <div className="p-text-center">
-                                <p>Não possui uma conta ainda? <a href="/cadastro" className="link">Crie Agora</a></p>
                             </div>
                         </div>
                     </div>
-                </div>
-
+                </section>
             </React.Fragment>
         )
     }

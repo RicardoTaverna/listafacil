@@ -1,19 +1,30 @@
 
 body {
 	font-family: "Roboto";
-	background: linear-gradient(
-		rgba(0, 0, 0, 0.4), 
-		rgba(0, 0, 0, 0.4)
-	), url("background.jpg") no-repeat center center fixed;
-	
-	background-size: cover;
-	height: 100%;
-	overflow: hidden;
 	transition:all 0.3s ease;
+	height: 100%;
 }
 
 header {
 	margin-top: 7%;
+}
+
+.header-container {
+	margin-top: -65px;
+}
+
+.header-parallax {
+	background: linear-gradient(
+		rgba(0, 0, 0, 0.4), 
+		rgba(0, 0, 0, 0.4)
+	), url("background.jpg") no-repeat center center fixed;
+	min-height: 920px;
+	background-attachment: fixed;
+	background-position: center;
+	background-repeat: no-repeat;
+	background-size: cover;
+	padding-top: 150px;
+	padding-bottom: 40px;
 }
 
 .mt-3 {
@@ -53,12 +64,12 @@ header {
 }
 
 .footer {
-	position: fixed;
 	text-align: center;
 	left: 0;
 	bottom: 0;
 	width: 100%;
-	padding-bottom: 1rem;
+	max-height: 30px;
+	padding-bottom: 5rem;
 }
 
 .footer-text {
@@ -67,4 +78,18 @@ header {
 
 .p-px-3 {
 	padding: 0rem 0.3rem;
+}
+
+
+
+@media only screen and (max-device-width: 1366px) {
+	.header-parallax {
+		min-height: 400px;
+	}
+}
+
+@media only screen and (max-device-width: 480px) {
+	.header-image {
+		width: 75%;
+	}
 }
