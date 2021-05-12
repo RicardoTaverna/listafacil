@@ -3,6 +3,13 @@ const { parseISO, isBefore, subHours } = require('date-fns');
 const Token = use('App/Models/Token');
 
 class ResetPasswordController {
+  /**
+   * Change and stores user new password.
+   * POST password/reset
+   *
+   * @param {Request} ctx.request
+   * @param {Response} ctx.response
+   */
   async store({ request, response }) {
     const { token, password } = request.only(['token', 'password']);
 
