@@ -4,6 +4,7 @@ const { test, trait } = use('Test/Suite')('Create User');
 const User = use('App/Models/User');
 
 trait('Test/ApiClient');
+trait('DatabaseTransactions')
 
 test('can create a user if valid data', async ({ client }) => {
   await User.create({
@@ -21,13 +22,3 @@ test('can create a user if valid data', async ({ client }) => {
   }])
 })
 
-test('can user authenticate if valid data', async ({ client }) => {
-  const data = {
-    "email":"teste@teste.com",
-    "password":"teste"
-  }
-  
-  const response = await client.post('/session').send(data).end();
-
-  response.assertStatus(200);
-})

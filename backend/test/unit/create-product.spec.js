@@ -1,6 +1,6 @@
 'use strict'
 
-const { test, trait } = use('Test/Suite')('Create User');
+const { test, trait } = use('Test/Suite')('Create Product');
 const Product = use('App/Models/Product');
 
 trait('Test/ApiClient');

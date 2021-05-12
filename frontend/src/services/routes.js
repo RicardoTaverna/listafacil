@@ -4,6 +4,8 @@ import { isAuthenticated } from './../services/auth';
 import Home from './../pages/Home/index'
 import Login from './../components/Login/index';
 import Register from './../components/Register/index';
+import ResetPassword from './../components/ResetPassword/index';
+import ResetPasswordForm from './../components/ResetPasswordForm/index';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -23,6 +25,8 @@ const Routes = () => (
             <Route exact path="/" component={Home} />
             <Route path="/cadastro" component={Register} />
             <Route path="/login" component={Login} />
+            <Route path="/reset" component={ResetPassword} />
+            <Route path="/password/reset/:id" component={ResetPasswordForm} />
             <PrivateRoute path="/app" component={() => <h1>App</h1>} />
             <Route path="*" component={() => <h1>Page not found</h1>} />
         </Switch>

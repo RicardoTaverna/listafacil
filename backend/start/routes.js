@@ -1,6 +1,3 @@
-'use strict'
-
-
 /*
 |--------------------------------------------------------------------------
 | Routes
@@ -15,28 +12,34 @@
 */
 
 /** @type {typeof import('@adonisjs/framework/src/Route/Manager')} */
-const Route = use('Route')
+const Route = use('Route');
 
 // Outras rotas
-Route.get('/', () => {return { greeting: 'Hello world in JSON' }});
+Route.get('/', () => ({ greeting: 'Hello world in JSON' }));
 
-
-//Rotas List
-Route.resource('list', 'ListController').apiOnly().middleware('auth')
+// Rotas List
+Route.resource('list', 'ListController').apiOnly().middleware('auth');
 
 // Rotas Product
 Route.get('/product/get_products', 'ProductController.get_product');
 Route.get('/product', 'ProductController.index');
 Route.get('/product/:id', 'ProductController.show');
 Route.post('/product', 'ProductController.create');
-Route.put('/product/:id', 'ProductController.update').middleware(['findProduct']);
-Route.delete('/product/:id', 'ProductController.delete').middleware(['findProduct']);
-
+Route.put('/product/:id', 'ProductController.update').middleware([
+  'findProduct',
+]);
+Route.delete('/product/:id', 'ProductController.delete').middleware([
+  'findProduct',
+]);
 
 // Rotas User
-Route.get('/user', 'UserController.list_all');
-Route.get('/user/:id', 'UserController.list_by_id');
+Route.get('/user', 'UserController.listAll');
+Route.get('/user/:id', 'UserController.listById');
 Route.post('/user', 'UserController.create');
 Route.put('/user/:id', 'UserController.update');
 Route.delete('/user/:id', 'UserController.delete');
 Route.post('/session', 'SessionController.create');
+Route.post('/forgot', 'ForgotPasswordController.store');
+Route.post('/password/reset', 'ResetPasswordController.store').validator(
+  'Reset'
+);
