@@ -8,50 +8,42 @@ import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
 import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
-import './register.css';
+import './reset.css';
 
-class Register extends React.Component {
+class ResetPassword extends React.Component {
 
     constructor(props) {
         super(props);
         this.state = {
             displayBasic: false,
-            username: "",
             email: "",
-            password: "",
-            passwordconfirm: "",
             messageError: "",
             
         };
-        this.onSignUp = this.onSignUp.bind(this);
         this.renderFooter = this.renderFooter.bind(this);
+        this.onReset = this.onReset.bind(this);
         this.showError = this.showError.bind(this);
     }
 
-    onSignUp = async e => {
+    onReset = async e => {
         
-        const { username, email, password, passwordconfirm } = this.state;
-        if (!email || !password || !username || !passwordconfirm ) {
+        const { email } = this.state;
+        if (!email) {
             this.setState(
-                {messageError: "Para realizar seu cadastro preencha todos os campos!"},
+                {messageError: "Digite seu e-mail para recuperar sua senha!"},
                 () => this.showError()
             );
 
-        } else if(password !== passwordconfirm) {
-            this.setState(
-                {messageError: "Senhas não coincidem!" },
-                () => this.showError()
-                );
-
-        } else{
+        }else{
             try {
-                await api.post("/user", { username, email, password });
+                await api.post("/forgot", { email });
                 this.renderFooter();
 
             } catch (err) {
                 console.log(err);
                 this.setState(
-                    {messageError: "Ocorreu um erro ao registrar sua conta. T.T"},
+                    {messageError: "Ocorreu um erro ao enviar o e-mail. T.T"},
+                    console.log(email),
                     () => this.showError()
                 );
             }
@@ -59,23 +51,25 @@ class Register extends React.Component {
     };
 
 
-    renderFooter() {
 
+    renderFooter() {
         this.toastBC.show({ severity: 'success', sticky: true, content: (
             <div className="p-flex p-flex-column  " style={{flex: '1'}}>
                 <div className="p-text-center">
-                    <i className="pi pi-check-circle" style={{fontSize: '3rem'}}></i>
-                    <h4>Registrado!</h4>
-                    <p>Sua conta foi criada com sucesso!</p>
+                    <i className="pi pi-send" style={{fontSize: '3rem'}}></i>
+                    <h4>E-mail Enviado!</h4>
+                    <p>Enviamos o email de reset, verifique sua caixa de entrada!</p>
                 </div>
                 <div className="p-grid p-fluid">
                     <div className="p-col-12">
-                        <Button type="button" label="Ok" className="p-button-primary" onClick={() => this.props.history.push("/app")} />
+                        <Button type="button" label="Ok" className="p-button-primary" onClick={() => this.props.history.push("/login")} />
                     </div>
                 </div>
             </div>
         ) });
     }
+
+
 
 
     showError() {
@@ -95,9 +89,10 @@ class Register extends React.Component {
                             <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
                         </div>
                     </div>
+
                     <div className="card-container p-d-flex p-jc-center">
 
-                        <div className="registro-card">
+                        <div className="reset-card">
                             <div className="p-fluid p-jc-center">
                                 <div className="p-mb-2">
                                     <img src={logo} alt="listafácil" className="logo-image"></img>
@@ -109,32 +104,9 @@ class Register extends React.Component {
                                             <InputText id="email" value={this.state.email} onChange={(e) => this.setState({email: e.target.value})} />
                                             <label htmlFor="email">Endereço de E-mail*</label>
                                         </span>
-                                    </div>
-                                    <div className="p-field">
-                                        <span className="p-float-label">
-                                            <InputText className="p-m-auto" value={this.state.username} onChange={(e) => this.setState({username: e.target.value})} />
-                                            <label htmlFor="username">Usuario*</label>
-                                        </span>
-                                    </div>
-
-                                    <div className="p-field">
-                                        <span className="p-float-label">
-                                            <Password className="p-m-auto" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} toggleMask feedback={true}/>
-                                            <label htmlFor="password">Senha*</label>
-                                        </span>
-                                    </div>
-                                    <div className="p-field">
-                                        <span className="p-float-label">
-                                            <Password className="p-m-auto" value={this.state.passwordconfirm} onChange={(e) => this.setState({passwordconfirm: e.target.value})} toggleMask feedback={false}/>
-                                            <label htmlFor="passwordconfirm">Confirmar Senha</label>
-                                        </span>
-                                    </div>
-                                    
+                                    </div>                           
                                 </form>
-                                <Button label="Registre-se" className="p-my-3 p-shadow-14" onClick={this.onSignUp } />
-                                <div className="p-text-center">
-                                    <p>Já possui uma conta? <a href="/login" className="link">Faça Login Aqui</a></p>
-                                </div>
+                                <Button label="Enviar Reset de Senha" className="p-my-3 p-shadow-14" onClick={this.onReset } />
                             </div>
                         </div>
                     </div>
@@ -144,4 +116,4 @@ class Register extends React.Component {
     }
 }
 
-export default withRouter(Register);
+export default withRouter(ResetPassword);

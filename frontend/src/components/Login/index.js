@@ -58,7 +58,7 @@ class Login extends React.Component {
                         </div>
                     </div>
 
-                    <div className="p-d-flex p-jc-center p-mt-2">
+                    <div className="card-container p-d-flex p-jc-center p-mt-2">
                         <div className="login-card">
                             <div className="p-fluid p-jc-center">
                                 <div className="p-mb-2">
@@ -75,10 +75,10 @@ class Login extends React.Component {
                                     <div className="p-field">
                                         <span className="p-float-label">
                                             <Password className="p-m-auto" value={this.state.password} onChange={(e) => this.setState({password: e.target.value})} toggleMask feedback={false}/>
-                                            <label htmlFor="password">Password*</label>
+                                            <label htmlFor="password">Senha*</label>
                                         </span>
                                     </div>
-                                    <a href="/#" className="link p-my-2">Esqueci minha senha</a>
+                                    <a href="/reset" className="link p-my-2">Esqueci minha senha</a>
                                 </form>
                                 <Button label="Login" className="p-my-3 p-shadow-14" onClick={this.onLogin} />
                                 <div className="p-text-center">
