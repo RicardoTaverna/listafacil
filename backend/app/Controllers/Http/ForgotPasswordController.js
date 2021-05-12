@@ -7,6 +7,12 @@ const Env = use('Env');
 const User = use('App/Models/User');
 
 class ForgotPasswordController {
+  /**
+   * Generete stores and send to user a token for change password.
+   * POST forgot
+   *
+   * @param {Request} ctx.request
+   */
   async store({ request }) {
     const email = request.input('email');
 
