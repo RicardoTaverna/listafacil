@@ -3,7 +3,7 @@ import './frontpage.css';
 import logo from '../../images/ListaFácil_removebg.png';
 import { Button } from 'primereact/button';
 
-class Home extends React.Component {
+class Frontpage extends React.Component {
     render() {       
         return (
         <React.Fragment>
@@ -42,4 +42,4 @@ class Home extends React.Component {
     }
 }
 
-export default Home;
+export default Frontpage;

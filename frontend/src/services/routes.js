@@ -2,6 +2,7 @@ import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { isAuthenticated } from './../services/auth';
 import Frontpage from './../pages/Frontpage/index'
+import Home from './../pages/Home/index'
 import Login from './../components/Login/index';
 import Register from './../components/Register/index';
 
@@ -23,7 +24,7 @@ const Routes = () => (
             <Route exact path="/" component={Frontpage} />
             <Route path="/cadastro" component={Register} />
             <Route path="/login" component={Login} />
-            <PrivateRoute path="/app" component={() => <h1>App</h1>} />
+            <PrivateRoute path="/app" component={Home} />
             <Route path="*" component={() => <h1>Page not found</h1>} />
         </Switch>
     </BrowserRouter>

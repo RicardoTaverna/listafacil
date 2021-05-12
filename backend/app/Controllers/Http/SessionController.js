@@ -7,6 +7,11 @@ class SessionController {
 
         return token;
     }
+
+    async show({ request, auth}){
+        return auth.user.id
+    }
 }
+
 
 module.exports = SessionController
