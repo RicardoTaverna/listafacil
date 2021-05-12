@@ -39,7 +39,7 @@ Route.post('/user', 'UserController.create');
 Route.put('/user/:id', 'UserController.update');
 Route.delete('/user/:id', 'UserController.delete');
 Route.post('/session', 'SessionController.create');
-Route.post('/forgot', 'ForgotPasswordController.store');
-Route.post('/password/reset', 'ResetPasswordController.store').validator(
+Route.post('/forgot', 'UserController.forgotPassword');
+Route.post('/password/reset', 'UserController.resetPassword').validator(
   'Reset'
 );
