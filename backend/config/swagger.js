@@ -1,5 +1,3 @@
-'use strict'
-
 module.exports = {
   /*
   |--------------------------------------------------------------------------
@@ -17,30 +15,29 @@ module.exports = {
       info: {
         title: 'Listafacil',
         version: '1.0.0',
-        description: "Documentação da API do app Listafacil",
-        termsOfService: "http://swagger.io/terms/",
-        
+        description: 'Documentação da API do app Listafacil',
+        termsOfService: 'http://swagger.io/terms/',
       },
-  
+
       basePath: '/',
       securitySchemes: {
         bearerAuth: {
-           type: 'http',
-           scheme: 'bearer',
-           bearerFormat: 'JWT'
-        }
-     },
+          type: 'http',
+          scheme: 'bearer',
+          bearerFormat: 'JWT',
+        },
+      },
       // Example security definitions.
       securityDefinitions: {
         ApiKey: {
           description: 'ApiKey description',
-          name: 'Authorization'
+          name: 'Authorization',
         },
         bearerAuth: {
           type: 'apiKey',
           in: 'header',
-          name: 'Authorization'
-       },
+          name: 'Authorization',
+        },
 
         // OAuth2 configuration
         OAuth2: {
@@ -52,10 +49,11 @@ module.exports = {
           scopes: {
             read: 'Grants read access (this is just sample)',
             write: 'Grants write access (this is just sample)',
-            admin: 'Grants read and write access to administrative information (this is just sample)'
-          }
+            admin:
+              'Grants read and write access to administrative information (this is just sample)',
+          },
         },
-      }
+      },
     },
 
     // Path to the API docs
@@ -64,12 +62,6 @@ module.exports = {
     //    'docs/**/*.yml',    // load recursive all .yml file in docs directory
     //    'docs/**/*.js',     // load recursive all .js file in docs directory
     // ]
-    apis: [
-      'app/**/*.js',
-      'docs/*.yml',
-      'start/routes.js'
-    ]
-
-    
-  }
-}
+    apis: ['app/**/*.js', 'docs/*.yml', 'start/routes.js'],
+  },
+};
