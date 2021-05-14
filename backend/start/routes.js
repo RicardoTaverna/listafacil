@@ -35,6 +35,7 @@ Route.delete('/product/:id', 'ProductController.delete').middleware([
 // Rotas User
 Route.get('/user', 'UserController.listAll');
 Route.get('/user/:id', 'UserController.listById');
+Route.get('/session', 'SessionController.show').middleware('auth')
 Route.post('/user', 'UserController.create');
 Route.put('/user/:id', 'UserController.update');
 Route.delete('/user/:id', 'UserController.delete');

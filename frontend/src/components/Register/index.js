@@ -70,7 +70,7 @@ class Register extends React.Component {
                 </div>
                 <div className="p-grid p-fluid">
                     <div className="p-col-12">
-                        <Button type="button" label="Ok" className="p-button-primary" onClick={() => this.props.history.push("/app")} />
+                        <Button type="button" label="Ok" className="p-button-primary" onClick={() => this.props.history.push("/login")} />
                     </div>
                 </div>
             </div>

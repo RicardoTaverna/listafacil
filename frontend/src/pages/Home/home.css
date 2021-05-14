@@ -1,95 +1,58 @@
-
-body {
-	font-family: "Roboto";
-	transition:all 0.3s ease;
-	height: 100%;
-}
-
-header {
-	margin-top: 7%;
-}
-
-.header-container {
-	margin-top: -65px;
-}
-
-.header-parallax {
-	background: linear-gradient(
-		rgba(0, 0, 0, 0.4), 
-		rgba(0, 0, 0, 0.4)
-	), url("background.jpg") no-repeat center center fixed;
-	min-height: 920px;
+.user-background {
+    background: url("cool-background.png") no-repeat center center fixed;
+	min-height: 320px;
 	background-attachment: fixed;
 	background-position: center;
 	background-repeat: no-repeat;
 	background-size: cover;
-	padding-top: 150px;
-	padding-bottom: 40px;
+	padding-top: 100px;
+	padding-bottom: 180px;
 }
 
-.mt-3 {
-	margin-top: 3rem;
+.profile-container {
+	margin-top: -80px;
+	padding-top: -80px;
 }
 
-.text-center {
+.profile-title {
+	background-color:#363636;
+	padding: 1px;
+	border-radius: 10px;
+
+}
+
+.profile-card-left {
+
+    border: 1px solid #292929;
+    border-radius: 10px;
+    margin: 20px;
+    box-sizing: border-box;
+    background-color: #292929;
+    -webkit-box-shadow: 0px 0px 15px 3px #000000;
+    box-shadow: 0px 0px 15px 3px #000000;
+}
+
+.profile-card-right {
+
+	max-height: 35rem;
+    border: 1px solid #292929;
+    border-radius: 10px;
+    padding: 30px;
+    margin: 20px;
+    box-sizing: border-box;
+    background-color: #292929;
+    -webkit-box-shadow: 0px 0px 15px 3px #000000;
+    box-shadow: 0px 0px 15px 3px #000000;
+}
+
+.profile-image {
+	margin-top: -140px;
 	text-align: center;
 }
 
-.header-image {
-	display: block;
-	margin: auto;
-	padding-top: 3rem;
-}
-
-.topnav {
-	overflow: hidden;
-}
-
-.align-right {
-	float: right;
-}
-
-.topnav a {
-	float: left;
-	color: #f7f7ff;
-	text-align: center;
-	padding: 14px 16px;
-	text-decoration: none;
-	font-size: 15px;
-}
-
-.topnav a:hover {
-	background-color: #49c7ab;
-	color: white;
-}
-
-.footer {
-	text-align: center;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	max-height: 30px;
-	padding-bottom: 5rem;
-}
-
-.footer-text {
-	font-size: 12px;
-}
-
-.p-px-3 {
-	padding: 0rem 0.3rem;
-}
-
-
-
-@media only screen and (max-device-width: 1366px) {
-	.header-parallax {
-		min-height: 400px;
-	}
-}
-
-@media only screen and (max-device-width: 480px) {
-	.header-image {
-		width: 75%;
-	}
+.profile-avatar {
+	vertical-align: middle;
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
 }

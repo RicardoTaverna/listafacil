@@ -51,11 +51,18 @@ class UserController {
    */
   async update({ params, request }) {
     const user = await User.findOrFail(params.id);
-    const data = request.only(['username', 'email']);
+    const { username, email, name, lastname, adress, district, city, uf } = request.post();
 
-    user.merge(data);
+    user.username = username || user.username;
+    user.email = email || user.email;
+    user.name = name || user.name;
+    user.lastname = lastname || user.lastname;
+    user.adress = adress || user.adress;
+    user.district = district || user.district;
+    user.city = city || user.city;
+    user.uf = uf || user.uf;
+
     await user.save();
-
     return user;
   }
 
