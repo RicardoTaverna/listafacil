@@ -10,11 +10,17 @@ class UserSchema extends Schema {
       table.string('username', 80).notNullable().unique()
       table.string('email', 254).notNullable().unique()
       table.string('password', 60).notNullable()
+      table.string('name', 50)
+      table.string('lastname', 60)
+      table.string('adress', 254)
+      table.string('district', 254)
+      table.string('city', 254)
+      table.string('uf', 2)
       table.timestamps()
     })
   }
 
-  down () {
+  down() {
     this.drop('users')
   }
 }

@@ -26,14 +26,11 @@ const Routes = () => (
             <Route exact path="/" component={Frontpage} />
             <Route path="/cadastro" component={Register} />
             <Route path="/login" component={Login} />
-<<<<<<< HEAD
-            <PrivateRoute path="/app" component={Home} />
-=======
             <Route path="/reset" component={ResetPassword} />
             <Route path="/password/reset/:id" component={ResetPasswordForm} />
-            <PrivateRoute path="/app" component={() => <h1>App</h1>} />
->>>>>>> 8dcc2b4246460183aab0693ebd5d7eb40b3d8d5b
+            <PrivateRoute path="/app" component={Home} />
             <Route path="*" component={() => <h1>Page not found</h1>} />
+
         </Switch>
     </BrowserRouter>
 );
