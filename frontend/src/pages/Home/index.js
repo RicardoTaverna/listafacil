@@ -64,7 +64,6 @@ class Home extends React.Component {
         this.showMessagError = this.showMessageError.bind(this);
         this.onUfChange = this.onUfChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
-        
     }
 
     onUfChange(e) {
@@ -121,6 +120,7 @@ class Home extends React.Component {
         this.toast.show({severity:'error', summary: 'Erro ao atualizar os dados', detail: this.messageError , life: 3000});
     }
 
+    
     render () {
         const lista_card = (
             <span className="p-d-flex p-jc-between">
