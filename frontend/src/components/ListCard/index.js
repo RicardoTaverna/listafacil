@@ -7,7 +7,6 @@ import { Checkbox } from 'primereact/checkbox';
 import { Divider } from 'primereact/divider';
 import { Sidebar } from 'primereact/sidebar';
 import { Toast } from 'primereact/toast';
- 
 
 const ListCard = (props) => {
 
