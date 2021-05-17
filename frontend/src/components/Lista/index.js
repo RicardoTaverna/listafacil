@@ -38,7 +38,6 @@ class Lista extends React.Component {
                     {lists: response.data}
                 )
             })
-
         } catch (err) {
             console.log('error', err);
         }
