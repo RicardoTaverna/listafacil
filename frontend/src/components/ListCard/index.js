@@ -84,7 +84,6 @@ const ListCard = (props) => {
                         <Button icon="pi pi-trash" onClick={showConfirm} className="p-button-rounded p-button-danger p-button-outlined p-mr-2"/>
                         <Button icon="pi pi-pencil" onClick={() => setvisibleLeft(true)} className="p-button-rounded p-button-info p-button-outlined"/>
                     </div>
-
                 </div>
             </div>
         </React.Fragment>
