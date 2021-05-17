@@ -23,7 +23,6 @@ const ListCard = (props) => {
     const onDelete = async e => {
         try {
             api.delete(`/list/${id}`)
-
         } catch (err) {
             console.log('error', err);
         }
