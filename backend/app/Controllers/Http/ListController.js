@@ -77,10 +77,11 @@ class ListController {
       return response.status(401).send({ error: 'Not authorized' });
     }
 
-    const { listname, descricao, products } = request.post();
+    const { listname, descricao, finished, products } = request.post();
 
     list.listname = listname || list.listname;
     list.descricao = descricao || list.descricao;
+    list.finished = finished || list.finished;
 
     await list.save();
 

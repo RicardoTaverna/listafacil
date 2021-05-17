@@ -3,6 +3,7 @@ import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { isAuthenticated } from './../services/auth';
 import Frontpage from './../pages/Frontpage/index'
 import Home from './../pages/Home/index'
+import Lista from './../components/Lista/index';
 import Login from './../components/Login/index';
 import Register from './../components/Register/index';
 import ResetPassword from './../components/ResetPassword/index';
@@ -28,7 +29,8 @@ const Routes = () => (
             <Route path="/login" component={Login} />
             <Route path="/reset" component={ResetPassword} />
             <Route path="/password/reset/:id" component={ResetPasswordForm} />
-            <PrivateRoute path="/app" component={Home} />
+            <PrivateRoute exact path="/app" component={Home} />
+            <PrivateRoute exact path="/lista" component={Lista} />
             <Route path="*" component={() => <h1>Page not found</h1>} />
 
         </Switch>
