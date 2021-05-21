@@ -167,25 +167,13 @@ const MenuTopBar = () => {
     }
 
     const onLogout = () => {
-        try {
-            console.log('passei aqui')
-            history.push("/login");
-            logout();
-        } catch (err) {
-            this.setState(
-                {messageError: "Houve um problema com o login, verifique suas credenciais. T.T"},
-                () => this.showError()
-            );
-        } 
+        logout();
+        history.push("/login");
     }
 
     const clear = () => {
         toastBC.current.clear();
     }
-
-
-
-
 
     const start = <img alt="logo" src={logo} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} height="40" className="p-mr-2"></img>;
     const end = <InputText placeholder="Search" type="text" />;
