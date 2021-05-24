@@ -20,6 +20,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
             )
         }
     />
+
 );
 
 const Routes = () => (
