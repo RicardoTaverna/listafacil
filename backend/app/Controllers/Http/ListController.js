@@ -29,15 +29,13 @@ class ListController {
       .with('products')
       .fetch();
 
-    const { userId } = list.rows[0];
+    const { user_id } = list.rows[0];
 
-    if (userId !== auth.user.id) {
+    if (user_id !== auth.user.id) {
       return response.status(401).send({ error: 'Not authorized' });
     }
 
-    response.status(200).json({
-      data: list,
-    });
+    return list;
   }
 
   /**

@@ -1,7 +1,6 @@
 import React from 'react';
-import { Link, withRouter } from "react-router-dom";
 import logo from '../../images/ListaFácil_removebg.png';
-import api from "../../services/api";
+import { api } from "../../services/api";
 import { login } from "../../services/auth";
 import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';

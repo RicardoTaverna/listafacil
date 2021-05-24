@@ -50,9 +50,11 @@ class ProductController {
    */
   async create({ request, response, view }) {
     const data = request.only(['name', 'value', 'stablishment']);
-    console.log(data);
     const product = await Product.create(data);
-    return product;
+
+    response.status(200).json({
+      data: product,
+    });
   }
 
   /**
@@ -90,40 +92,6 @@ class ProductController {
     return `Produto ${product.name} removido com sucesso!`;
   }
 
-  /**
-   * Função para buscar na API do menor preco um produto.
-   * @param {object} ctx - parametros passados pelo endpoint
-   * @param {Request} ctx.request
-   * @return {Request} cBrief description of the returning value here.
-   */
-  async get_product({ params, request }) {
-    const url = 'http://ricardotaverna.pythonanywhere.com/api/v1/produtos/';
-    const headers = {
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    };
-    const data = await axios
-      .get(url, headers, withCredentials)
-      .then((response) => {
-        console.log('Funcionei');
-        console.log(`response is : ${response}`);
-      })
-      .catch((error) => {
-        if (error.response) {
-          console.log('Erro: retornado response.headers');
-          console.log(error.response.headers);
-        } else if (error.request) {
-          console.log('Erro: retornado request');
-          console.log(error.request);
-        } else {
-          console.log('Erro: retornado message');
-          console.log(error.message);
-        }
-        console.log('Erro: retornado config');
-        console.log(error.config);
-      });
-    return data;
-  }
 }
 
 module.exports = ProductController;

@@ -1,12 +1,11 @@
 import React from 'react';
-import { Link, Redirect, withRouter } from "react-router-dom";
+import { withRouter } from "react-router-dom";
 import logo from '../../images/ListaFácil_removebg.png';
-import api from "../../services/api";
+import { api } from "../../services/api";
 
 
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
-import { Dialog } from 'primereact/dialog';
 import { Toast } from 'primereact/toast';
 import './resetForm.css';
 
