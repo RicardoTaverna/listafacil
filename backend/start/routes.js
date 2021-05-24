@@ -44,3 +44,12 @@ Route.post('/forgot', 'UserController.forgotPassword');
 Route.post('/password/reset', 'UserController.resetPassword').validator(
   'Reset'
 );
+
+// Rotas API de produtos
+Route.get('/api/establishment', 'ProductApiController.indexEstablishments');
+Route.get(
+  '/api/establishment/:name',
+  'ProductApiController.showEstablishments'
+);
+Route.get('/api/product', 'ProductApiController.indexProducts');
+Route.get('/api/product/:product', 'ProductApiController.showProducts');

@@ -1,6 +1,7 @@
 import React, { useState, useRef } from 'react';
+import { useHistory } from "react-router-dom";
 import './listcard.css';
-import api from "../../services/api";
+import { api } from "../../services/api";
 import ListForm from '../ListForm/index';
 import { Button } from 'primereact/button';
 import { Checkbox } from 'primereact/checkbox';
@@ -18,7 +19,7 @@ const ListCard = (props) => {
     const [checked, setChecked] = useState(check);
     const [visibleLeft, setvisibleLeft] = useState(false);
     const toastBC = useRef(null);
-    const toast = useRef(null);
+    const history = useHistory();
 
     const onDelete = async e => {
         try {
@@ -36,6 +37,11 @@ const ListCard = (props) => {
         } catch (err) {
             console.log('error', err);
         }
+    }
+
+    const routeChange = () =>{ 
+        let path = `/lista/${id}`; 
+        history.push(path);
     }
 
     const showConfirm = () => {
@@ -62,8 +68,7 @@ const ListCard = (props) => {
             <Sidebar visible={visibleLeft} baseZIndex={-100} onHide={() => setvisibleLeft(false)}>
                 <ListForm listname={title} descricao={description} id={id} edit={true} ></ListForm>
             </Sidebar>
-
-            <div className={checked ? "list-card-item-done" : "list-card-item"}>
+            <div className={checked ? "list-card-item-done" : "list-card-item"} onClick={routeChange}>
                 <Toast ref={toastBC} position="bottom-center" />
                 <div className="p-d-flex p-jc-between">
                     <div>

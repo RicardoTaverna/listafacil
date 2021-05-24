@@ -1,6 +1,6 @@
 import React from 'react';
 import './home.css';
-import api from "../../services/api";
+import { api } from "../../services/api";
 import MenuTopBar from './../../components/MenuTopBar/index';
 import { Badge } from 'primereact/badge';
 import { Button } from 'primereact/button';

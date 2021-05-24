@@ -1,6 +1,6 @@
 import React from 'react';
 import './lista.css';
-import api from "../../services/api";
+import { api } from "../../services/api";
 import MenuTopBar from '../MenuTopBar/index';
 import ListCard from '../ListCard/index';
 import ListForm from '../ListForm/index';
@@ -10,7 +10,7 @@ import { ScrollPanel } from 'primereact/scrollpanel';
 import { Sidebar } from 'primereact/sidebar';
 import { Toast } from 'primereact/toast';
 
-class Lista extends React.Component {
+class List extends React.Component {
 
     constructor(props){
         super(props);
@@ -78,6 +78,7 @@ class Lista extends React.Component {
                                 <ScrollPanel style={{ height: '500px' }}>
                                     {lists.map(
                                         list => <ListCard 
+                                            key={list.id}
                                             id={list.id} 
                                             title={list.listname}
                                             description={list.descricao}
@@ -95,4 +96,4 @@ class Lista extends React.Component {
     }
 }
 
-export default Lista
+export default List
