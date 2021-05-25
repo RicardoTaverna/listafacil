@@ -23,6 +23,16 @@ const MenuTopBar = () => {
             url: '/app',
         },
         {
+            label: 'Listas',
+            icon: 'pi pi-fw pi-list',
+            url: '/lista',
+        },
+        {
+            label: 'Buscar Produto',
+            icon: 'pi pi-fw pi-search',
+            url: '/buscar-produto',
+        },
+        {
             label: 'Sair',
             icon: 'pi pi-fw pi-power-off',
             command: () => showConfirm()
