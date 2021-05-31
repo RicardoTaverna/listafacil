@@ -68,11 +68,11 @@ const ListCard = (props) => {
             <Sidebar visible={visibleLeft} baseZIndex={-100} onHide={() => setvisibleLeft(false)}>
                 <ListForm listname={title} descricao={description} id={id} edit={true} ></ListForm>
             </Sidebar>
-            <div className={checked ? "list-card-item-done" : "list-card-item"} onClick={routeChange}>
+            <div className={checked ? "list-card-item-done" : "list-card-item"}>
                 <Toast ref={toastBC} position="bottom-center" />
                 <div className="p-d-flex p-jc-between">
                     <div>
-                        <h3>{title}</h3>
+                        <h2 className="list-title" onClick={routeChange}>{title} </h2>
                         <p>{description}</p>
                     </div>
                     <div className="p-field-checkbox">
