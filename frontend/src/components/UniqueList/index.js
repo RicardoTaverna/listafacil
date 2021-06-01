@@ -81,7 +81,10 @@ class UniqueList extends React.Component {
     }
 
     onSearchProduct = async e => {
-        this.setState({ spinIcon: true })
+        this.setState({ 
+            spinIcon: true,
+            searchedProducts: []
+        })
         try {
             await api.get(`/api/product/${this.state.searchProduct}`).then((response) => {
                 this.setState({ searchedProducts: response.data.results })
@@ -167,7 +170,8 @@ class UniqueList extends React.Component {
                                             price={product.valor}
                                             updated={product.tempo}
                                             establishment={product.estabelecimento}
-                                            listProducts={listProducts}>
+                                            listProducts={listProducts}
+                                            sidebar={true}>
                                             </Product>
                                     )}
                                 </div>
