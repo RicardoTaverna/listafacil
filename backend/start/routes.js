@@ -53,3 +53,7 @@ Route.get(
 );
 Route.get('/api/product', 'ProductApiController.indexProducts');
 Route.get('/api/product/:product', 'ProductApiController.showProducts');
+
+Route.put('/user/:id/images/', 'ImageController.update').middleware('auth');
+
+Route.get('images/:path', 'ImageController.show');
