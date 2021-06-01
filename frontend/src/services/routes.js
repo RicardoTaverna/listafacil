@@ -8,6 +8,7 @@ import Login from './../components/Login/index';
 import Register from './../components/Register/index';
 import ResetPassword from './../components/ResetPassword/index';
 import ResetPasswordForm from './../components/ResetPasswordForm/index';
+import Search from './../components/Search/index';
 import UniqueList from './../components/UniqueList/index';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
@@ -34,6 +35,7 @@ const Routes = () => (
             <PrivateRoute exact path="/app" component={Home} />
             <PrivateRoute exact path="/lista" component={List} />
             <PrivateRoute exact path="/lista/:id" component={UniqueList} />
+            <PrivateRoute exact path="/busca" component={Search} />
             <Route path="*" component={() => <h1>Page not found</h1>} />
 
         </Switch>
