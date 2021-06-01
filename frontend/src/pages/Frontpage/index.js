@@ -1,18 +1,53 @@
 import React from 'react';
 import './frontpage.css';
 import logo from '../../images/ListaFácil_removebg.png';
+import { isAuthenticated, logout } from "../../services/auth";
 import { Button } from 'primereact/button';
 
+
 class Frontpage extends React.Component {
-    render() {       
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            logged: false
+        }
+        this.onLogout = this.onLogout.bind(this);
+    }
+
+    componentDidMount(){
+        if(isAuthenticated()){
+            this.setState({ logged: true})
+        }
+    }
+
+    onLogout(){
+        logout()
+        this.setState({ logged: false })
+    }
+
+    render() {     
+        const navbarDeslogada = (
+            <div className="align-right" style={{'margin-right':'2rem'}}>
+                <a className="active" href="/login">Login</a>
+                <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
+                <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
+            </div>
+        );
+
+        const navbarLogada = (
+            <div className="align-right" style={{'margin-right':'2rem'}}>
+                <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
+                <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
+                <a href="/" onClick={this.onLogout}>Sair</a>
+            </div>
+        );
+        
+        const { logged } = this.state;
         return (
         <React.Fragment>
             <div className="topnav">
-                <div className="align-right" style={{'margin-right':'2rem'}}>
-                    <a className="active" href="/login">Login</a>
-                    <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
-                    <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
-                </div>
+                { logged ? navbarLogada : navbarDeslogada }
             </div>
 
             <header className="header-container">
