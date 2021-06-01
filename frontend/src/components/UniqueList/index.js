@@ -36,6 +36,8 @@ class UniqueList extends React.Component {
         this.onLoad = this.onLoad.bind(this);
         this.onEstablishmentChange = this.onEstablishmentChange.bind(this);
         this.onSearchProduct = this.onSearchProduct.bind(this);
+        this.onCleanList = this.onCleanList.bind(this);
+        this.onDelete = this.onDelete.bind(this);
     }
 
     componentDidMount(){
@@ -90,12 +92,41 @@ class UniqueList extends React.Component {
         }
     }
 
+    onDelete = async (id) => {
+        try {
+            api.delete(`/product/${id}`)
+        } catch (err) {
+            console.log('error', err);
+        }
+    }
+
+    onCleanList = async e => {
+        let { listProducts } = this.state;
+        try {
+            let i;
+            for(i = 0; i < listProducts.length; i++){
+                this.onDelete(listProducts[i].id)
+            }
+        } catch (err) {
+            console.log('error', err);
+        }
+    }
+
     onEstablishmentChange(e) {
         this.setState({ selectedEstablishment: e.value });
     }
 
     render() {
         let { searchedProducts, listProducts } = this.state;
+        let valor = 0.0;
+        let itensQuanitty = 0;
+        
+        let concatValor = listProducts.map(product => 
+            valor += product.total
+        )
+        concatValor = listProducts.map(product => 
+            itensQuanitty += product.quantity
+        )
         const loadIcon = (
             <div className="p-text-center p-mt-4">
                 <i className="pi pi-spin pi-spinner" style={{'fontSize': '2em'}}></i>
@@ -151,13 +182,15 @@ class UniqueList extends React.Component {
                     <div className="p-col p-md-10 p-lg-9 p-xl-7 list-container">
                         <div className="list-card">
                             <div className="list-card-title">
-                                <div className="p-p-2 p-m-2 p-d-flex p-jc-between">
+                                <div className="p-p-3 p-m-3 p-d-flex p-jc-between">
                                     <div>
                                         <h2>{this.state.listname}</h2>
                                         <p>{this.state.descricao}</p>
                                     </div>
-                                    <div>
-                                        <p>{this.state.updateAt}</p>
+                                    <div className="p-grid p-text-right">
+                                        <div className="p-col-12">
+                                            <Button onClick={this.onCleanList} label="Limpar Lista" icon="pi pi-trash" className="p-button-danger p-button-text"/>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -168,15 +201,27 @@ class UniqueList extends React.Component {
                                 </div>
                             </div>
                             <div className="p-mt-4">
-                                {listProducts.map(
-                                    product => <ListProduct
-                                        key={product.id}
-                                        id={product.id}
-                                        description={product.name}
-                                        price={product.value}
-                                        establishment={product.stablishment}>
-                                        </ListProduct>
-                                )}
+                                <ScrollPanel style={{ width: '100%', height: '400px' }}>
+                                    {listProducts.map(
+                                        product => <ListProduct
+                                            key={product.id}
+                                            product={product}>
+                                            </ListProduct>
+                                    )}
+                                </ScrollPanel>
+                                
+                                <Divider></Divider>
+                                <div className="list-card-title">
+                                    <div className="p-p-3 p-m-3 p-d-flex p-jc-between">
+                                        <div>
+                                            <p>Total de itens: {itensQuanitty}</p>
+                                            <h2>R${valor.toFixed(2)}</h2>
+                                        </div>
+                                        <div className="data-text p-text-italic">
+                                            <p>{this.state.updateAt}</p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
