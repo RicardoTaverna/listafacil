@@ -9,6 +9,7 @@ import { Divider } from 'primereact/divider';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
+import { FileUpload } from 'primereact/fileupload';
 
 
 class Home extends React.Component {
@@ -64,6 +65,8 @@ class Home extends React.Component {
         this.showMessagError = this.showMessageError.bind(this);
         this.onUfChange = this.onUfChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+        this.onBasicUpload = this.onBasicUpload.bind(this);
+        this.updateImage = this.updateImage.bind(this);
     }
 
     onUfChange(e) {
@@ -119,7 +122,23 @@ class Home extends React.Component {
     showMessageError() {
         this.toast.show({severity:'error', summary: 'Erro ao atualizar os dados', detail: this.messageError , life: 3000});
     }
+    onBasicUpload() {
+        this.toast.show({severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode'});
+        this.updateImage();
+    }
 
+    updateImage = async e =>{
+        let { id } = this.state;
+        console.log(id)
+        const image  = 'perfil-min.png';
+        try {
+            await api.put("/user/${id}/images/", {image});
+
+        } catch (err) {
+            console.log(err)
+        }
+
+    }
     
     render () {
         const lista_card = (
@@ -154,6 +173,7 @@ class Home extends React.Component {
                         <div className="profile-card-right">
                             <div className="profile-image">
                                 <img src="https://i.pravatar.cc/200" alt="profile" className="profile-avatar p-shadow-10"/>
+                                <FileUpload mode="basic" name="demo[]" url="https://primefaces.org/primereact/showcase/upload.php" accept="image/*" maxFileSize={1000000} onUpload={this.onBasicUpload} />
                             </div>
                             <div className="p-d-flex p-mt-4 p-text-center">
                                 <div className="p-col-6">
