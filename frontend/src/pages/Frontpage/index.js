@@ -1,18 +1,83 @@
 import React from 'react';
 import './frontpage.css';
 import logo from '../../images/ListaFácil_removebg.png';
+import { isAuthenticated, logout } from "../../services/auth";
+import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
+import { useHistory } from "react-router-dom";
+
 
 class Frontpage extends React.Component {
-    render() {       
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            logged: false
+        }
+        this.onLogout = this.onLogout.bind(this);
+        this.showConfirm = this.showConfirm.bind(this);
+        this.clear = this.clear.bind(this);
+    }
+
+    componentDidMount(){
+        if(isAuthenticated()){
+            this.setState({ logged: true})
+        }
+    }
+
+    onLogout(){
+        logout()
+        this.setState({ logged: false })
+        this.props.history.push("/app")
+    }
+    
+    showConfirm  ()  {
+        this.toastBC.show({ severity: 'warn', sticky: true, content: (
+            <div className="p-flex p-flex-column" style={{flex: '1'}}>
+                <div className="p-text-center">
+                    <i className="pi pi-exclamation-triangle" style={{fontSize: '3rem'}}></i>
+                    <h4>Você deseja Deslogar?</h4>
+                    <p>Confirme</p>
+                </div>
+                <div className="p-grid p-fluid">
+                    <div className="p-col-6">
+                        <Button onClick={this.onLogout} type="button" label="Sim" className="p-button-success"  />
+                    </div>
+                    <div className="p-col-6">
+                        <Button onClick={this.clear} type="button" label="Não" className="p-button-secondary" />
+                    </div>
+                </div>
+            </div>
+        ) });
+    }
+
+    clear() {
+        this.toastBC.clear();
+    }
+
+    render() {     
+        const navbarDeslogada = (
+            <div className="align-right" style={{'margin-right':'2rem'}}>
+                <a className="active" href="/login">Login</a>
+                <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
+                <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
+            </div>
+        );
+
+        const navbarLogada = (
+            <div className="align-right" style={{'margin-right':'2rem'}}>
+                <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
+                <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
+                <a  onClick={this.showConfirm}>Sair</a>
+            </div>
+        );
+        
+        const { logged } = this.state;
         return (
         <React.Fragment>
+            <Toast ref={(el) => this.toastBC = el} position="bottom-center" />
             <div className="topnav">
-                <div className="align-right" style={{'margin-right':'2rem'}}>
-                    <a className="active" href="/login">Login</a>
-                    <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
-                    <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
-                </div>
+                { logged ? navbarLogada : navbarDeslogada }
             </div>
 
             <header className="header-container">

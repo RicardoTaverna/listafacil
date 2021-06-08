@@ -10,6 +10,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
+import { Link } from "react-router-dom";
 
 
 class Home extends React.Component {
@@ -28,6 +29,9 @@ class Home extends React.Component {
             city: '',
             uf: '',
             messageError: '',
+            lists: [],
+            listname:'',
+            listcreatedAt: '',
         }
  
         this.uf = [
@@ -67,6 +71,7 @@ class Home extends React.Component {
         this.onUpdate = this.onUpdate.bind(this);
         this.onBasicUpload = this.onBasicUpload.bind(this);
         this.updateImage = this.updateImage.bind(this);
+        this.onList = this.onList.bind(this);
     }
 
     onUfChange(e) {
@@ -75,6 +80,25 @@ class Home extends React.Component {
 
     componentDidMount(){
         this.onLogin();
+        this.onList();
+    }
+
+    onList = async e => {
+        try {
+            api.get('/list').then((response) => {
+                if(!response.data.length === 0){
+                    this.setState(
+                        {
+                            lists: response.data,
+                            listname: response.data[response.data.length - 1].listname,
+                            listcreatedAt: response.data[response.data.length - 1].created_at
+                        }
+                    )
+                }
+            })
+        } catch (err) {
+            console.log('error', err);
+        }
     }
 
     onLogin = async e => {
@@ -141,17 +165,28 @@ class Home extends React.Component {
     }
     
     render () {
+        let { lists } = this.state;
+        const ultimaLista = ( <p>{this.state.listname} - {this.state.listcreatedAt}</p> )
         const lista_card = (
             <span className="p-d-flex p-jc-between">
-                <p>ultima lista criada - 2 hrs</p>
-                <Button label="Adicionar" className="p-button-primary p-button-text p-ml-2" />
+                <div>
+                    <p>Última lista criada</p>
+                    {this.state.listname ? ultimaLista : ""}
+                </div>
+                <div>
+                    <Link to="/lista">
+                        <Button label="Adicionar" className="p-button-primary p-button-text p-ml-2"/> 
+                    </Link>
+                </div>
             </span>
         );
 
         const produto_card = (
             <span className="p-d-flex p-jc-between">
                 <p>última busca realizada - 1 min</p>
-                <Button label="Buscar" className="p-button-primary p-button-text p-ml-2" />
+                <Link to="/busca">
+                    <Button label="Buscar" className="p-button-primary p-button-text p-ml-2"/>
+                </Link>
             </span>
         );
 
@@ -177,7 +212,7 @@ class Home extends React.Component {
                             </div>
                             <div className="p-d-flex p-mt-4 p-text-center">
                                 <div className="p-col-6">
-                                    <Badge value="3" size="xlarge" severity="info"></Badge>
+                                    <Badge value={lists.length} size="xlarge" severity="info"></Badge>
                                     <p>Listas criadas</p>
                                 </div>
                                 <div className="p-col-6">
@@ -189,6 +224,7 @@ class Home extends React.Component {
                                 <Divider/>
                                 <Card title="Criar nova Lista" subTitle={lista_card} className="p-mb-2"></Card>     
                                 <Card title="Buscar Produto" subTitle={produto_card} className="p-mb-2"></Card>     
+                           
                             </div>
                         </div>
                     </div>

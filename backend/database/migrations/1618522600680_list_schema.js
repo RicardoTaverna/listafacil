@@ -10,7 +10,8 @@ class ListSchema extends Schema {
       table.integer('user_id').unsigned().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
       table.string('listname', 80).notNullable()
       table.text('descricao', 254).notNullable()
-      table.boolean('finished').defaultTo(0)
+      table.boolean('finished').defaultTo(0)      
+      table.string('priority').defaultTo('normal')
       table.timestamps()
     })
   }

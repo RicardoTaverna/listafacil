@@ -19,6 +19,7 @@ class Product extends React.Component {
             establishment: props.establishment,
             stablishment: props.establishment.nm_emp,
             productsId: props.listProducts,
+            sidebar: props.sidebar || false,
             products:[]
         };
         this.onAddProduct = this.onAddProduct.bind(this);
@@ -66,6 +67,9 @@ class Product extends React.Component {
     }
 
     render() {
+
+        const addButton = this.state.sidebar ? <Button icon="pi pi-plus" className="p-button-primary p-ml-2" onClick={this.onAddProduct}/> : " " 
+
         return (
             <React.Fragment>
     
@@ -99,7 +103,7 @@ class Product extends React.Component {
                     <div className="p-d-flex">
                         <Button className="p-button-outlined p-button-success" icon="pi pi-dollar" label="Valores" onClick={(e) => this.op2.toggle(e)} aria-haspopup aria-controls="overlay_panel"/>
                         <Button className="p-button-outlined p-button-info p-ml-2" icon="pi pi-eye" label="Estabelecimento" onClick={(e) => this.op.toggle(e)} aria-haspopup aria-controls="overlay_panel"/>
-                        <Button icon="pi pi-plus" className="p-button-primary p-ml-2" onClick={this.onAddProduct}/>
+                        {addButton}
                     </div>
                     <div className="data-text">
                         <p className="p-text-italic">REF: {this.state.id}</p>

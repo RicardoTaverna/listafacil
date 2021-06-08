@@ -49,7 +49,9 @@ class ProductController {
    * @param {Response} ctx.response
    */
   async create({ request, response, view }) {
-    const data = request.only(['name', 'value', 'stablishment']);
+    let data = request.only(['name', 'value', 'stablishment']);
+    const total = data.value;
+    data = { ...data, total }
     const product = await Product.create(data);
 
     response.status(200).json({
@@ -67,11 +69,19 @@ class ProductController {
    */
   async update({ params, request, response }) {
     const product = await Product.findOrFail(params.id);
-    const { name, value, stablishment } = request.post();
+    const { name, quantity, value, stablishment, finished } = request.post();
+
+    if(quantity > 0){
+      product.quantity = quantity || product.quantity;
+    } else {
+      product.quantity = 1;
+    }
 
     product.name = name || product.name;
     product.value = value || product.value;
     product.stablishment = stablishment || product.stablishment;
+    product.finished = finished || product.finished;
+    product.total = product.value * product.quantity;
 
     await product.save();
 
