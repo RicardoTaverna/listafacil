@@ -69,8 +69,6 @@ const MenuTopBar = () => {
     }
 
     const start = <img alt="logo" src={logo} onError={(e) => e.target.src='https://www.primefaces.org/wp-content/uploads/2020/05/placeholder.png'} height="40" className="p-mr-2"></img>;
-    const end = <Button label="Sair" icon="pi pi-power-off"  onClick={showConfirm}/>
-
 
     return (
         <div>

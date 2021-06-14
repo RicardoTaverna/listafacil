@@ -1,15 +1,16 @@
 import React from "react";
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom";
 import { isAuthenticated } from './../services/auth';
-import Frontpage from './../pages/Frontpage/index'
-import Home from './../pages/Home/index'
-import List from './../components/List/index';
-import Login from './../components/Login/index';
-import Register from './../components/Register/index';
-import ResetPassword from './../components/ResetPassword/index';
-import ResetPasswordForm from './../components/ResetPasswordForm/index';
-import Search from './../components/Search/index';
-import UniqueList from './../components/UniqueList/index';
+import Admin from './../pages/Admin'
+import Frontpage from './../pages/Frontpage'
+import Home from './../pages/Home'
+import List from './../components/List';
+import Login from './../components/Login';
+import Register from './../components/Register';
+import ResetPassword from './../components/ResetPassword';
+import ResetPasswordForm from './../components/ResetPasswordForm';
+import Search from './../components/Search';
+import UniqueList from './../components/UniqueList';
 
 const PrivateRoute = ({ component: Component, ...rest }) => (
     <Route
@@ -28,6 +29,7 @@ const Routes = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Frontpage} />
+            <Route exact path="/admin" component={Admin} />
             <Route path="/cadastro" component={Register} />
             <Route path="/login" component={Login} />
             <Route path="/reset" component={ResetPassword} />
