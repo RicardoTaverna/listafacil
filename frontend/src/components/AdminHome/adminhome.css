@@ -1,0 +1,9 @@
+.left-panel{
+    background-color: #1E1E1E;
+    z-index: 200;
+    margin-top: -1rem;
+}
+
+.box-stretched {
+    height: 100%;
+}

@@ -1,7 +1,7 @@
 const List = use('App/Models/List');
 class ListController {
   /**
-   * Show a list of all lists.
+   * Show a list of all lists by user.
    * GET lists
    *
    * @param {object} ctx
@@ -14,6 +14,17 @@ class ListController {
 
     return list;
   }
+
+  /**
+   * Show all lists.
+   * GET lists/all
+   *
+   * @param {object} ctx
+   */
+     async indexAll() {
+      const list = await List.all();
+      return list;
+    }
 
   /**
    * Show a unic list with products.
