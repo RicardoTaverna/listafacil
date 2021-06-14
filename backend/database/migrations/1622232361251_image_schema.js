@@ -8,7 +8,7 @@ class ImageSchema extends Schema {
     this.create('images', (table) => {
       table.increments()
       table.integer('user_id').unsigned().references('id').inTable('users').onUpdate('CASCADE').onDelete('CASCADE')
-      table.string('path').notNullable()
+      table.string('path').notNullable().defaultTo('perfil.jpg')
       table.timestamps()
     })
   }
