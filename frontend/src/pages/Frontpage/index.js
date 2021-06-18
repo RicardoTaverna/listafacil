@@ -4,8 +4,6 @@ import logo from '../../images/ListaFácil_removebg.png';
 import { isAuthenticated, logout } from "../../services/auth";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { useHistory } from "react-router-dom";
-
 
 class Frontpage extends React.Component {
 
@@ -66,9 +64,10 @@ class Frontpage extends React.Component {
 
         const navbarLogada = (
             <div className="align-right" style={{'margin-right':'2rem'}}>
+                <a className="active" href="/app">Home</a>
                 <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
                 <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
-                <a  onClick={this.showConfirm}>Sair</a>
+                <a onClick={this.showConfirm}>Sair</a>
             </div>
         );
         

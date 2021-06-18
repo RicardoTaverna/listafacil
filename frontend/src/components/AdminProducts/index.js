@@ -7,16 +7,14 @@ import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
-import { RadioButton } from 'primereact/radiobutton';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
-import './adminLists.css';
+import './adminProducts.css';
 
-export class AdminLists extends Component {
+export class AdminProducts extends Component {
 
-    emptylist = {
+    emptyproduct = {
         id: null,
-        user_id: null,
         listname: '',
         descricao: '',
         finished: 0,
@@ -28,11 +26,12 @@ export class AdminLists extends Component {
 
         this.state = {
             lists: null,
+            products: null,
             listDialog: false,
-            deleteListDialog: false,
-            deleteListsDialog: false,
-            user: this.emptylist,
-            list: this.emptyList,
+            deleteProductDialog: false,
+            deleteProductsDialog: false,
+            list: this.emptyproduct,
+            product: this.emptyproduct,
             selectedLists: null,
             submitted: false,
             globalFilter: null
@@ -44,17 +43,17 @@ export class AdminLists extends Component {
 
         this.openNew = this.openNew.bind(this);
         this.hideDialog = this.hideDialog.bind(this);
-        this.saveList = this.saveList.bind(this);
-        this.editList = this.editList.bind(this);
-        this.confirmDeleteList = this.confirmDeleteList.bind(this);
-        this.deleteList = this.deleteList.bind(this);
+        this.saveProduct = this.saveProduct.bind(this);
+        this.editProduct = this.editProduct.bind(this);
+        this.confirmDeleteProduct = this.confirmDeleteProduct.bind(this);
+        this.deleteProduct = this.deleteProduct.bind(this);
         this.exportCSV = this.exportCSV.bind(this);
         this.confirmDeleteSelected = this.confirmDeleteSelected.bind(this);
         this.deleteSelectedLists = this.deleteSelectedLists.bind(this);
         this.onCategoryChange = this.onCategoryChange.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
-        this.hideDeleteListDialog = this.hideDeleteListDialog.bind(this);
-        this.hideDeleteListsDialog = this.hideDeleteListsDialog.bind(this);
+        this.hideDeleteProductDialog = this.hideDeleteProductDialog.bind(this);
+        this.hideDeleteProductsDialog = this.hideDeleteProductsDialog.bind(this);
     }
 
     componentDidMount() {
@@ -63,9 +62,9 @@ export class AdminLists extends Component {
 
     onLoad = async e => {
         try {
-            api.get("/lists/all").then((data) => {
+            api.get("/product").then((data) => {
                 this.setState({
-                    lists: data.data
+                    products: data.data
                 })
             });
 
@@ -76,7 +75,7 @@ export class AdminLists extends Component {
 
     openNew() {
         this.setState({
-            list: this.emptylist,
+            list: this.emptyproduct,
             submitted: false,
             listDialog: true
         });
@@ -89,15 +88,15 @@ export class AdminLists extends Component {
         });
     }
 
-    hideDeleteListDialog() {
-        this.setState({ deleteListDialog: false });
+    hideDeleteProductDialog() {
+        this.setState({ deleteProductDialog: false });
     }
 
-    hideDeleteListsDialog() {
-        this.setState({ deleteListsDialog: false });
+    hideDeleteProductsDialog() {
+        this.setState({ deleteProductsDialog: false });
     }
 
-    saveList = async e => {
+    saveProduct = async e => {
         let state = { submitted: true };
 
         if (this.state.list.listname.trim()) {
@@ -132,34 +131,34 @@ export class AdminLists extends Component {
                 ...state,
                 lists,
                 listDialog: false,
-                list: this.emptylist
+                list: this.emptyproduct
             };
         }
 
         this.setState(state);
     }
 
-    editList(list) {
+    editProduct(list) {
         this.setState({
             list: { ...list },
             listDialog: true
         });
     }
 
-    confirmDeleteList(list) {
+    confirmDeleteProduct(list) {
         this.setState({
             list,
-            deleteListDialog: true
+            deleteProductDialog: true
         });
     }
 
-    deleteList() {
+    deleteProduct() {
         let lists = this.state.lists.filter(val => val.id !== this.state.list.id);
         api.delete(`/list/${this.state.list.id}`)
         this.setState({
             lists,
-            deleteListDialog: false,
-            list: this.emptylist
+            deleteProductDialog: false,
+            list: this.emptyproduct
         });
         this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Lista deletada', life: 3000 });
     }
@@ -181,14 +180,14 @@ export class AdminLists extends Component {
     }
 
     confirmDeleteSelected() {
-        this.setState({ deleteListsDialog: true });
+        this.setState({ deleteProductsDialog: true });
     }
 
     deleteSelectedLists() {
         let lists = this.state.lists.filter(val => !this.state.selectedLists.includes(val));
         this.setState({
             lists,
-            deleteListsDialog: false,
+            deleteProductsDialog: false,
             selectedLists: null
         });
         this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Listas deletadas', life: 3000 });
@@ -228,8 +227,8 @@ export class AdminLists extends Component {
     actionBodyTemplate(rowData) {
         return (
             <React.Fragment>
-                <Button icon="pi pi-pencil" className="p-button-rounded p-button-primary p-mr-2" onClick={() => this.editList(rowData)} />
-                <Button icon="pi pi-trash" className="p-button-rounded p-button-danger" onClick={() => this.confirmDeleteList(rowData)} />
+                <Button icon="pi pi-pencil" className="p-button-rounded p-button-primary p-mr-2" onClick={() => this.editProduct(rowData)} />
+                <Button icon="pi pi-trash" className="p-button-rounded p-button-danger" onClick={() => this.confirmDeleteProduct(rowData)} />
             </React.Fragment>
         );
     }
@@ -247,18 +246,18 @@ export class AdminLists extends Component {
         const listDialogFooter = (
             <React.Fragment>
                 <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={this.hideDialog} />
-                <Button label="Salvar" icon="pi pi-check" className="p-button-text" onClick={this.saveList} />
+                <Button label="Salvar" icon="pi pi-check" className="p-button-text" onClick={this.saveProduct} />
             </React.Fragment>
         );
-        const deleteListDialogFooter = (
+        const deleteProductDialogFooter = (
             <React.Fragment>
-                <Button label="Não" icon="pi pi-times" className="p-button-text" onClick={this.hideDeleteListDialog} />
-                <Button label="Sim" icon="pi pi-check" className="p-button-text" onClick={this.deleteList} />
+                <Button label="Não" icon="pi pi-times" className="p-button-text" onClick={this.hideDeleteProductDialog} />
+                <Button label="Sim" icon="pi pi-check" className="p-button-text" onClick={this.deleteProduct} />
             </React.Fragment>
         );
-        const deleteListsDialogFooter = (
+        const deleteProductsDialogFooter = (
             <React.Fragment>
-                <Button label="Não" icon="pi pi-times" className="p-button-text" onClick={this.hideDeleteListsDialog} />
+                <Button label="Não" icon="pi pi-times" className="p-button-text" onClick={this.hideDeleteProductsDialog} />
                 <Button label="Sim" icon="pi pi-check" className="p-button-text" onClick={this.deleteSelectedLists} />
             </React.Fragment>
         );
@@ -270,7 +269,7 @@ export class AdminLists extends Component {
                 <div className="card">
                     <Toolbar className="p-mb-4" left={this.leftToolbarTemplate} right={this.rightToolbarTemplate}></Toolbar>
 
-                    <DataTable ref={(el) => this.dt = el} value={this.state.lists} selection={this.state.selectedLists} onSelectionChange={(e) => this.setState({ selectedLists: e.value })}
+                    <DataTable ref={(el) => this.dt = el} value={this.state.products} selection={this.state.selectedLists} onSelectionChange={(e) => this.setState({ selectedLists: e.value })}
                         dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
                         currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
@@ -279,11 +278,9 @@ export class AdminLists extends Component {
 
                         <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
                         <Column field="id" header="Id" sortable headerStyle={{ width: '5rem' }}></Column>
-                        <Column field="user_id" header="Usuário" sortable></Column>
-                        <Column field="listname" header="Listname" sortable></Column>
-                        <Column field="descricao" header="Descrição" sortable></Column>
-                        <Column field="finished" header="Finalizada" className="p-text-center" sortable></Column>
-                        <Column field="priority" header="Prioridade" sortable></Column>
+                        <Column field="name" header="Descrição" sortable></Column>
+                        <Column field="value" header="Valor" sortable></Column>
+                        <Column field="stablishment" header="Estabelecimento" sortable></Column>
                         <Column body={this.actionBodyTemplate}></Column>
                     </DataTable>
                 </div>
@@ -291,26 +288,26 @@ export class AdminLists extends Component {
                 <Dialog visible={this.state.listDialog} style={{ width: '450px' }} header="Adicionar Lista" modal className="p-fluid" footer={listDialogFooter} onHide={this.hideDialog}>
                     <div className="p-field">
                         <label htmlFor="listname">listname</label>
-                        <InputText id="listname" value={this.state.user.listname} onChange={(e) => this.onInputChange(e, 'listname')} required autoFocus className={classNames({ 'p-invalid': this.state.submitted && !this.state.user.listname })} />
-                        {this.state.submitted && !this.state.user.listname && <small className="p-error">listname é obrigatório.</small>}
+                        <InputText id="listname" value={this.state.list.listname} onChange={(e) => this.onInputChange(e, 'listname')} required autoFocus className={classNames({ 'p-invalid': this.state.submitted && !this.state.list.listname })} />
+                        {this.state.submitted && !this.state.list.listname && <small className="p-error">listname é obrigatório.</small>}
                     </div>
                     <div className="p-field">
                         <label htmlFor="descricao">Descrição</label>
-                        <InputTextarea id="descricao" value={this.state.user.descricao} onChange={(e) => this.onInputChange(e, 'descricao')} required />
+                        <InputTextarea id="descricao" value={this.state.list.descricao} onChange={(e) => this.onInputChange(e, 'descricao')} required />
                     </div>
                 </Dialog>
 
-                <Dialog visible={this.state.deleteListDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteListDialogFooter} onHide={this.hideDeleteListDialog}>
+                <Dialog visible={this.state.deleteProductDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductDialogFooter} onHide={this.hideDeleteProductDialog}>
                     <div className="confirmation-content">
                         <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem'}} />
-                        {this.state.user && <span>Certeza que deseja deletar o usuário <b>{this.state.user.listname}</b>?</span>}
+                        {this.state.list && <span>Certeza que deseja deletar o usuário <b>{this.state.list.listname}</b>?</span>}
                     </div>
                 </Dialog>
 
-                <Dialog visible={this.state.deleteListsDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteListsDialogFooter} onHide={this.hideDeleteListsDialog}>
+                <Dialog visible={this.state.deleteProductsDialog} style={{ width: '450px' }} header="Confirm" modal footer={deleteProductsDialogFooter} onHide={this.hideDeleteProductsDialog}>
                     <div className="confirmation-content">
                         <i className="pi pi-exclamation-triangle p-mr-3" style={{ fontSize: '2rem'}} />
-                        {this.state.user && <span>Certeza que deseja deletar o usuário selecionado?</span>}
+                        {this.state.list && <span>Certeza que deseja deletar o usuário selecionado?</span>}
                     </div>
                 </Dialog>
             </div>
@@ -318,4 +315,4 @@ export class AdminLists extends Component {
     }
 }
 
-export default AdminLists;
+export default AdminProducts;

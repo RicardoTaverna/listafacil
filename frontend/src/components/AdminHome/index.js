@@ -5,6 +5,7 @@ import { api } from '../../services/api';
 import { logout } from '../../services/auth';
 import AdminUsers from '../../components/AdminUsers';
 import AdminLists from '../../components/AdminLists';
+import AdminProducts from '../../components/AdminProducts';
 import { Button } from 'primereact/button';
 import { Card } from 'primereact/card';
 import { Divider } from 'primereact/divider';
@@ -47,6 +48,7 @@ class AdminHome extends React.Component {
             {
                 label:'Produtos',
                 icon:'pi pi-fw pi-pencil',
+                command: () => this.showAdminProducts()
             }
         ];
 
@@ -59,6 +61,8 @@ class AdminHome extends React.Component {
         this.showAdminUsers = this.showAdminUsers.bind(this);
         this.adminLists = this.adminLists.bind(this);
         this.showAdminLists = this.showAdminLists.bind(this);
+        this.adminProducts = this.adminProducts.bind(this);
+        this.showAdminProducts = this.showAdminProducts.bind(this);
     }
 
     componentDidMount(){
@@ -148,11 +152,27 @@ class AdminHome extends React.Component {
         )
     }
 
+    adminProducts(){
+        return(
+            <AdminProducts></AdminProducts>
+        )
+    }    
+
+    showAdminProducts(){
+        this.setState({ 
+            dashboard: false,
+            adminUsers: false,
+            adminLists: false,
+            adminProducts: true,
+        })
+    }
+
     showAdminLists(){
         this.setState({ 
             dashboard: false,
             adminUsers: false,
             adminLists: true,
+            adminProducts: false,
         })
     }
 
@@ -241,6 +261,7 @@ class AdminHome extends React.Component {
                                 {this.state.dashboard ? this.dashboard() : ""}
                                 {this.state.adminUsers ? this.adminUsers() : ""}
                                 {this.state.adminLists ? this.adminLists() : ""}
+                                {this.state.adminProducts ? this.adminProducts() : ""}
                             </div>
                         </div>
                     </div>

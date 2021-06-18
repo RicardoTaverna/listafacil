@@ -289,7 +289,7 @@ export class AdminUsers extends Component {
                     </DataTable>
                 </div>
 
-                <Dialog visible={this.state.userDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={userDialogFooter} onHide={this.hideDialog}>
+                <Dialog visible={this.state.userDialog} style={{ width: '450px' }} header="Adicionar Usuario" modal className="p-fluid" footer={userDialogFooter} onHide={this.hideDialog}>
                     <div className="p-field">
                         <label htmlFor="username">Username</label>
                         <InputText id="username" value={this.state.user.username} onChange={(e) => this.onInputChange(e, 'username')} required autoFocus className={classNames({ 'p-invalid': this.state.submitted && !this.state.user.username })} />
