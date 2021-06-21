@@ -28,7 +28,6 @@ export class AdminLists extends Component {
 
         this.state = {
             lists: null,
-            users: null,
             listDialog: false,
             deleteListDialog: false,
             deleteListsDialog: false,
@@ -77,7 +76,7 @@ export class AdminLists extends Component {
 
     openNew() {
         this.setState({
-            lists: this.emptylist,
+            list: this.emptylist,
             submitted: false,
             listDialog: true
         });
@@ -147,15 +146,16 @@ export class AdminLists extends Component {
         });
     }
 
-    confirmDeleteList(user) {
+    confirmDeleteList(list) {
         this.setState({
-            user,
+            list,
             deleteListDialog: true
         });
     }
 
     deleteList() {
         let lists = this.state.lists.filter(val => val.id !== this.state.list.id);
+        api.delete(`/list/${this.state.list.id}`)
         this.setState({
             lists,
             deleteListDialog: false,
@@ -288,7 +288,7 @@ export class AdminLists extends Component {
                     </DataTable>
                 </div>
 
-                <Dialog visible={this.state.listDialog} style={{ width: '450px' }} header="Product Details" modal className="p-fluid" footer={listDialogFooter} onHide={this.hideDialog}>
+                <Dialog visible={this.state.listDialog} style={{ width: '450px' }} header="Adicionar Lista" modal className="p-fluid" footer={listDialogFooter} onHide={this.hideDialog}>
                     <div className="p-field">
                         <label htmlFor="listname">listname</label>
                         <InputText id="listname" value={this.state.user.listname} onChange={(e) => this.onInputChange(e, 'listname')} required autoFocus className={classNames({ 'p-invalid': this.state.submitted && !this.state.user.listname })} />

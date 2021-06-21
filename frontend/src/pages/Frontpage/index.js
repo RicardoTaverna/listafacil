@@ -4,7 +4,6 @@ import logo from '../../images/ListaFácil_removebg.png';
 import { isAuthenticated, logout } from "../../services/auth";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
-import { useHistory } from "react-router-dom";
 
 
 class Frontpage extends React.Component {
