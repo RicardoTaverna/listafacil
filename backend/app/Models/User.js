@@ -36,6 +36,10 @@ class User extends Model {
   list() {
     return this.hasMany('App/Models/List');
   }
+  
+  images () {
+    return this.hasOne('App/Models/Image');
+  }
 }
 
 module.exports = User;

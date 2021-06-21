@@ -39,6 +39,7 @@ class UserController {
    */
   async listById({ params }) {
     const user = await User.findOrFail(params.id);
+    await user.load('images')
     return user;
   }
 

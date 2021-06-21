@@ -91,7 +91,7 @@ class Register extends React.Component {
                     <Toast ref={(el) => this.toastBC = el} position="bottom-center" />
                     <div class="topnav">
                         <div>
-                            <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
+                            <Button onClick={() => this.props.history.push("/")} label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
                         </div>
                     </div>
                     <div className="card-container p-d-flex p-jc-center">

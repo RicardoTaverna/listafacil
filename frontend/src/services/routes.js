@@ -25,13 +25,27 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
 
 );
 
+const AutorizedRoute = ({ component: Component, ...rest }) => (
+    <Route
+        {...rest}
+        render={props => isAuthenticated() ? (
+                <Redirect to={{ pathname: "/app", state: { from: props.location } }} />
+                
+            ) : (
+                <Component {...props} />
+            )
+        }
+    />
+
+);
+
 const Routes = () => (
     <BrowserRouter>
         <Switch>
             <Route exact path="/" component={Frontpage} />
             <Route exact path="/admin" component={Admin} />
-            <Route path="/cadastro" component={Register} />
-            <Route path="/login" component={Login} />
+            <AutorizedRoute path="/cadastro" component={Register} />
+            <AutorizedRoute path="/login" component={Login} />
             <Route path="/reset" component={ResetPassword} />
             <Route path="/password/reset/:id" component={ResetPasswordForm} />
             <PrivateRoute exact path="/app" component={Home} />

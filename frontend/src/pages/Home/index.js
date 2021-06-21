@@ -9,7 +9,9 @@ import { Divider } from 'primereact/divider';
 import { Dropdown } from 'primereact/dropdown';
 import { InputText } from 'primereact/inputtext';
 import { Toast } from 'primereact/toast';
+import { FileUpload } from 'primereact/fileupload';
 import { Link } from "react-router-dom";
+import perfilImg from "./perfil.jpg";
 
 
 class Home extends React.Component {
@@ -31,6 +33,8 @@ class Home extends React.Component {
             lists: [],
             listname:'',
             listcreatedAt: '',
+            img: '',
+
         }
  
         this.uf = [
@@ -68,6 +72,8 @@ class Home extends React.Component {
         this.showMessagError = this.showMessageError.bind(this);
         this.onUfChange = this.onUfChange.bind(this);
         this.onUpdate = this.onUpdate.bind(this);
+        this.onToastUpload = this.onToastUpload.bind(this);
+        this.updateImage = this.updateImage.bind(this);
         this.onList = this.onList.bind(this);
     }
 
@@ -78,8 +84,9 @@ class Home extends React.Component {
     componentDidMount(){
         this.onLogin();
         this.onList();
+        
     }
-
+    
     onList = async e => {
         try {
             api.get('/list').then((response) => {
@@ -102,18 +109,23 @@ class Home extends React.Component {
         try {
             api.get("/session").then((request) => {
                 this.setState({id: request.data})
-                api.get(`/user/${this.state.id}`).then((data) => {
+                api.get(`/user/${this.state.id}`).then((response) => {
                     this.setState({
-                        id: data.data.id,
-                        username: data.data.username,
-                        email: data.data.email,
-                        name: data.data.name,
-                        lastname: data.data.lastname,
-                        adress: data.data.adress,
-                        district: data.data.district,
-                        city: data.data.city,
-                        uf: data.data.uf,
+                        id: response.data.id,
+                        username: response.data.username,
+                        email: response.data.email,
+                        name: response.data.name,
+                        lastname: response.data.lastname,
+                        adress: response.data.adress,
+                        district: response.data.district,
+                        city: response.data.city,
+                        uf: response.data.uf,
                     });
+                })
+                api.get(`/user/images/${this.state.id}`).then((response) => {
+                    this.setState(
+                        {img: 'http://127.0.0.1:3333/images/'+response.data.path},  
+                    )
                 })
             })
         } catch (err){
@@ -144,6 +156,42 @@ class Home extends React.Component {
         this.toast.show({severity:'error', summary: 'Erro ao atualizar os dados', detail: this.messageError , life: 3000});
     }
 
+    onToastUpload() {
+        this.toast.show({severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode'});
+    }
+
+    updateImage = (event) => {
+        
+        let { id } = this.state;
+        
+        const data = new FormData();
+        const files = event.files;
+        files.map((file, index) =>
+            data.append(`image[${index}]`, file, file.name)
+        );
+        
+        const config = {
+            headers: {
+                "content-type": "multipart/form-data"
+            }
+        };
+
+        try {
+            if(this.state.img){
+                api.put(`/user/${id}/images/`, data, config);
+                window.location.reload(true)
+                this.onToastUpload()
+            }else{
+                api.post(`/user/${id}/images/`, data, config);
+                window.location.reload(true)
+                this.onToastUpload()
+            }
+
+        } catch (err) {
+            console.log(err)
+        }
+        
+    }
     
     render () {
         let { lists } = this.state;
@@ -170,7 +218,10 @@ class Home extends React.Component {
                 </Link>
             </span>
         );
-
+        
+        const imagemPerfil = (
+            <img src={this.state.img ? this.state.img : perfilImg} alt="profile" className="profile-avatar p-shadow-10"/>
+        );
 
         return (
             <React.Fragment>
@@ -188,7 +239,8 @@ class Home extends React.Component {
                     <div className="p-col-12 p-md-5 p-lg-5 profile-container">
                         <div className="profile-card-right">
                             <div className="profile-image">
-                                <img src="https://i.pravatar.cc/200" alt="profile" className="profile-avatar p-shadow-10"/>
+                                {imagemPerfil}
+                                <FileUpload mode="basic" name="image[]" customUpload  accept="image/*" maxFileSize={1000000} uploadHandler={this.updateImage} />
                             </div>
                             <div className="p-d-flex p-mt-4 p-text-center">
                                 <div className="p-col-6">
