@@ -5,6 +5,7 @@ import { isAuthenticated, logout } from "../../services/auth";
 import { Toast } from 'primereact/toast';
 import { Button } from 'primereact/button';
 
+
 class Frontpage extends React.Component {
 
     constructor(props) {
@@ -64,10 +65,10 @@ class Frontpage extends React.Component {
 
         const navbarLogada = (
             <div className="align-right" style={{'margin-right':'2rem'}}>
-                <a className="active" href="/app">Home</a>
+                <a className="active" href="/app">Perfil</a>
                 <a href="https://github.com/RicardoTaverna/listafacil/issues">Problemas</a>
                 <a href="https://github.com/RicardoTaverna/listafacil#readme">Sobre</a>
-                <a onClick={this.showConfirm}>Sair</a>
+                <a  onClick={this.showConfirm}>Sair</a>
             </div>
         );
         
@@ -88,8 +89,8 @@ class Frontpage extends React.Component {
                         Crie agora sua conta e faça sua primeira lista de compras inteligente!
                     </h3>
                     <div className="mt-3 text-center">
-                        <Button label="Criar Conta" className="p-button-primary" style={{'margin-right':'1rem'}} />
-                        <Button label="Login" className="p-button-primary p-button-outlined" />
+                        <Button onClick={() => this.props.history.push("/cadastro")} label="Criar Conta" className="p-button-primary" style={{'margin-right':'1rem'}} />
+                        <Button onClick={() => this.props.history.push("/login")} label="Login" className="p-button-primary p-button-outlined" />
                     </div>
                 </div>
             </header>

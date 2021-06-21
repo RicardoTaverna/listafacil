@@ -30,7 +30,7 @@ const MenuTopBar = () => {
         {
             label: 'Buscar Produto',
             icon: 'pi pi-fw pi-search',
-            url: '/buscar-produto',
+            url: '/busca',
         },
         {
             label: 'Sair',
