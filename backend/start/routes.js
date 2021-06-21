@@ -19,6 +19,7 @@ Route.get('/', () => ({ greeting: 'Hello world in JSON' }));
 
 // Rotas List
 Route.resource('list', 'ListController').apiOnly().middleware('auth');
+Route.get('/lists/all', 'ListController.indexAll');
 
 // Rotas Product
 Route.get('/product/get_products', 'ProductController.get_product');
@@ -40,6 +41,7 @@ Route.post('/user', 'UserController.create');
 Route.put('/user/:id', 'UserController.update');
 Route.delete('/user/:id', 'UserController.delete');
 Route.post('/session', 'SessionController.create');
+Route.post('/session/admin', 'SessionController.createAdmin');
 Route.post('/forgot', 'UserController.forgotPassword');
 Route.post('/password/reset', 'UserController.resetPassword').validator(
   'Reset'

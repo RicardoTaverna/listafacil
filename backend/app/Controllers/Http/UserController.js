@@ -16,8 +16,8 @@ class UserController {
    * @param {Request} ctx.request
    */
   async create({ request }) {
-    const data = request.only(['username', 'email', 'password']);
-    const user = await User.create(data);
+    const { username, email, password, is_staff } = request.post();
+    const user = await User.create({ username, email, password, is_staff });
     return user;
   }
 
@@ -52,10 +52,11 @@ class UserController {
    */
   async update({ params, request }) {
     const user = await User.findOrFail(params.id);
-    const { username, email, name, lastname, adress, district, city, uf } = request.post();
+    const { username, email, is_staff, name, lastname, adress, district, city, uf } = request.post();
 
     user.username = username || user.username;
     user.email = email || user.email;
+    user.is_staff = is_staff || user.is_staff;
     user.name = name || user.name;
     user.lastname = lastname || user.lastname;
     user.adress = adress || user.adress;
