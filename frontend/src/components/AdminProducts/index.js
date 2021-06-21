@@ -9,16 +9,16 @@ import { Toolbar } from 'primereact/toolbar';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Dialog } from 'primereact/dialog';
 import { InputText } from 'primereact/inputtext';
+import { InputNumber } from 'primereact/inputnumber';
 import './adminProducts.css';
 
 export class AdminProducts extends Component {
 
     emptyproduct = {
         id: null,
-        listname: '',
-        descricao: '',
-        finished: 0,
-        priority: ''
+        name: '',
+        value: null,
+        stablishment: ''
     };
 
     constructor(props) {
@@ -27,7 +27,7 @@ export class AdminProducts extends Component {
         this.state = {
             lists: null,
             products: null,
-            listDialog: false,
+            productDialog: false,
             deleteProductDialog: false,
             deleteProductsDialog: false,
             list: this.emptyproduct,
@@ -49,11 +49,11 @@ export class AdminProducts extends Component {
         this.deleteProduct = this.deleteProduct.bind(this);
         this.exportCSV = this.exportCSV.bind(this);
         this.confirmDeleteSelected = this.confirmDeleteSelected.bind(this);
-        this.deleteSelectedLists = this.deleteSelectedLists.bind(this);
-        this.onCategoryChange = this.onCategoryChange.bind(this);
+        this.deleteSelectedProducts = this.deleteSelectedProducts.bind(this);
         this.onInputChange = this.onInputChange.bind(this);
         this.hideDeleteProductDialog = this.hideDeleteProductDialog.bind(this);
         this.hideDeleteProductsDialog = this.hideDeleteProductsDialog.bind(this);
+        this.priceBodyTemplate = this.priceBodyTemplate.bind(this);
     }
 
     componentDidMount() {
@@ -77,14 +77,14 @@ export class AdminProducts extends Component {
         this.setState({
             list: this.emptyproduct,
             submitted: false,
-            listDialog: true
+            productDialog: true
         });
     }
 
     hideDialog() {
         this.setState({
             submitted: false,
-            listDialog: false
+            productDialog: false
         });
     }
 
@@ -98,75 +98,77 @@ export class AdminProducts extends Component {
 
     saveProduct = async e => {
         let state = { submitted: true };
-
-        if (this.state.list.listname.trim()) {
-            let lists = [...this.state.lists];
-            let list = {...this.state.list};
-            if (this.state.list.id) {
-                const index = this.findIndexById(this.state.list.id);
-                lists[index] = list;
+        console.log('tentando...')
+        if (this.state.product.name.trim()) {
+            let products = [...this.state.products];
+            let product = {...this.state.product};
+            if (this.state.product.id) {
+                const index = this.findIndexById(this.state.product.id);
+                products[index] = product;
 
                 try {
-                    api.put(`/list/${this.state.list.id}`, list).then((data) => {
+                    api.put(`/product/${this.state.product.id}`, product).then((data) => {
                         console.log(data)
                     });
                 } catch (err){
                     console.log("erro: ", err);
                 };
 
-                this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Usuário atualizado', life: 3000 });
+                this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Produto atualizado', life: 3000 });
             }
             else {
                 try {
-                    api.post('/list', list).then((data) => {
+                    console.log('body', product);
+                    api.post('/product', product).then((data) => {
                         console.log(data)
                     });
                 } catch (err){
                     console.log("erro: ", err);
                 };
-                this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Usuário criado', life: 3000 });
+                this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Produto criado', life: 3000 });
             }
 
             state = {
                 ...state,
-                lists,
-                listDialog: false,
-                list: this.emptyproduct
+                products,
+                productDialog: false,
+                product: this.emptyproduct
             };
         }
 
         this.setState(state);
     }
 
-    editProduct(list) {
+    editProduct(product) {
         this.setState({
-            list: { ...list },
-            listDialog: true
+            product: { ...product },
+            productDialog: true
         });
     }
 
-    confirmDeleteProduct(list) {
+    confirmDeleteProduct(product) {
         this.setState({
-            list,
+            product,
             deleteProductDialog: true
         });
     }
 
     deleteProduct() {
-        let lists = this.state.lists.filter(val => val.id !== this.state.list.id);
-        api.delete(`/list/${this.state.list.id}`)
+        let products = this.state.products.filter(val => val.id !== this.state.product.id);
+        console.log('id: ', this.state.product.id)
+        api.delete(`/product/${this.state.product.id}`)
         this.setState({
-            lists,
+            products,
             deleteProductDialog: false,
-            list: this.emptyproduct
+            product: this.emptyproduct
         });
-        this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Lista deletada', life: 3000 });
+        this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Produto deletado', life: 3000 });
     }
 
     findIndexById(id) {
         let index = -1;
-        for (let i = 0; i < this.state.lists.length; i++) {
-            if (this.state.lists[i].id === id) {
+        for (let i = 0; i < this.state.products.length; i++) {
+            if (this.state.products[i].id === id) {
                 index = i;
                 break;
             }
@@ -183,28 +185,22 @@ export class AdminProducts extends Component {
         this.setState({ deleteProductsDialog: true });
     }
 
-    deleteSelectedLists() {
-        let lists = this.state.lists.filter(val => !this.state.selectedLists.includes(val));
+    deleteSelectedProducts() {
+        let products = this.state.products.filter(val => !this.state.selectedproducts.includes(val));
         this.setState({
-            lists,
+            products,
             deleteProductsDialog: false,
-            selectedLists: null
+            selectedproducts: null
         });
         this.toast.show({ severity: 'success', summary: 'Successful', detail: 'Listas deletadas', life: 3000 });
     }
 
-    onCategoryChange(e) {
-        let list = {...this.state.list};
-        list['finished'] = e.value;
-        this.setState({ list });
-    }
-
     onInputChange(e, name) {
         const val = (e.target && e.target.value) || '';
-        let list = {...this.state.list};
-        list[`${name}`] = val;
+        let product = {...this.state.product};
+        product[`${name}`] = val;
 
-        this.setState({ list });
+        this.setState({ product });
     }
 
     leftToolbarTemplate() {
@@ -233,6 +229,14 @@ export class AdminProducts extends Component {
         );
     }
 
+    formatCurrency(value) {
+        return value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+    }
+
+    priceBodyTemplate(rowData) {
+        return this.formatCurrency(rowData.value);
+    }
+
     render() {
         const header = (
             <div className="table-header">
@@ -243,7 +247,7 @@ export class AdminProducts extends Component {
                 </span>
             </div>
         );
-        const listDialogFooter = (
+        const productDialogFooter = (
             <React.Fragment>
                 <Button label="Cancelar" icon="pi pi-times" className="p-button-text" onClick={this.hideDialog} />
                 <Button label="Salvar" icon="pi pi-check" className="p-button-text" onClick={this.saveProduct} />
@@ -258,7 +262,7 @@ export class AdminProducts extends Component {
         const deleteProductsDialogFooter = (
             <React.Fragment>
                 <Button label="Não" icon="pi pi-times" className="p-button-text" onClick={this.hideDeleteProductsDialog} />
-                <Button label="Sim" icon="pi pi-check" className="p-button-text" onClick={this.deleteSelectedLists} />
+                <Button label="Sim" icon="pi pi-check" className="p-button-text" onClick={this.deleteSelectedProducts} />
             </React.Fragment>
         );
 
@@ -272,28 +276,32 @@ export class AdminProducts extends Component {
                     <DataTable ref={(el) => this.dt = el} value={this.state.products} selection={this.state.selectedLists} onSelectionChange={(e) => this.setState({ selectedLists: e.value })}
                         dataKey="id" paginator rows={10} rowsPerPageOptions={[5, 10, 25]}
                         paginatorTemplate="FirstPageLink PrevPageLink PageLinks NextPageLink LastPageLink CurrentPageReport RowsPerPageDropdown"
-                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} users"
+                        currentPageReportTemplate="Showing {first} to {last} of {totalRecords} products"
                         globalFilter={this.state.globalFilter}
                         header={header}>
 
                         <Column selectionMode="multiple" headerStyle={{ width: '3rem' }}></Column>
                         <Column field="id" header="Id" sortable headerStyle={{ width: '5rem' }}></Column>
                         <Column field="name" header="Descrição" sortable></Column>
-                        <Column field="value" header="Valor" sortable></Column>
+                        <Column field="value" header="Valor" body={this.priceBodyTemplate} sortable></Column>
                         <Column field="stablishment" header="Estabelecimento" sortable></Column>
                         <Column body={this.actionBodyTemplate}></Column>
                     </DataTable>
                 </div>
 
-                <Dialog visible={this.state.listDialog} style={{ width: '450px' }} header="Adicionar Lista" modal className="p-fluid" footer={listDialogFooter} onHide={this.hideDialog}>
+                <Dialog visible={this.state.productDialog} style={{ width: '450px' }} header="Adicionar Produto" modal className="p-fluid" footer={productDialogFooter} onHide={this.hideDialog}>
                     <div className="p-field">
-                        <label htmlFor="listname">listname</label>
-                        <InputText id="listname" value={this.state.list.listname} onChange={(e) => this.onInputChange(e, 'listname')} required autoFocus className={classNames({ 'p-invalid': this.state.submitted && !this.state.list.listname })} />
-                        {this.state.submitted && !this.state.list.listname && <small className="p-error">listname é obrigatório.</small>}
+                        <label htmlFor="name">Nome</label>
+                        <InputText id="name" value={this.state.product.name} onChange={(e) => this.onInputChange(e, 'name')} required autoFocus className={classNames({ 'p-invalid': this.state.submitted && !this.state.product.name })} />
+                        {this.state.submitted && !this.state.product.name && <small className="p-error">name é obrigatório.</small>}
                     </div>
                     <div className="p-field">
-                        <label htmlFor="descricao">Descrição</label>
-                        <InputTextarea id="descricao" value={this.state.list.descricao} onChange={(e) => this.onInputChange(e, 'descricao')} required />
+                        <label htmlFor="value">Valor</label>
+                        <InputNumber id="value" value={this.state.product.value} onValueChange={(e) => this.onInputChange(e, 'value')} required mode="currency" currency="BRL" locale="pt-BR" minFractionDigits={2} />
+                    </div>
+                    <div className="p-field">
+                        <label htmlFor="stablishment">Estabelecimento</label>
+                        <InputTextarea id="stablishment" value={this.state.product.stablishment} onChange={(e) => this.onInputChange(e, 'stablishment')} required />
                     </div>
                 </Dialog>
 

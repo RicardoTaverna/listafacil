@@ -4,7 +4,9 @@ import { api } from "../../services/api";
 import MenuTopBar from '../MenuTopBar/index';
 import Product from '../Product/index'
 import ListProduct from '../ListProduct/index';
+import ProductForm from '../ProductForm/index';
 import PrimeReact from 'primereact/api';
+import { Accordion, AccordionTab } from 'primereact/accordion';
 import { Button } from "primereact/button";
 import { Divider } from 'primereact/divider';
 import { Dropdown } from 'primereact/dropdown';
@@ -155,6 +157,13 @@ class UniqueList extends React.Component {
                             <Button icon="pi pi-search" className="p-button-primary" onClick={this.onSearchProduct}/>
                         </div>
                         <Divider></Divider>
+                        <Accordion>
+                            <AccordionTab header="Adicionar Produto Personalizado">
+                                <ProductForm listId={this.state.id} listProducts={listProducts}></ProductForm>
+                            </AccordionTab>
+                           
+                        </Accordion>
+                        <Divider></Divider>
                         <div>
                             <ScrollPanel style={{ width: '100%', height: '400px' }}>
                                 <div>
@@ -177,6 +186,7 @@ class UniqueList extends React.Component {
                                 </div>
                             </ScrollPanel>
                         </div>
+                        
                     </div>
                 </Sidebar>
                 <section className="list-background">
