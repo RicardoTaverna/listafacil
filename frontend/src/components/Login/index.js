@@ -6,6 +6,7 @@ import { InputText } from 'primereact/inputtext';
 import { Button } from 'primereact/button';
 import { Password } from 'primereact/password';
 import { Toast } from 'primereact/toast';
+import { Link } from "react-router-dom";
 import './login.css';
 
 class Login extends React.Component {
@@ -46,6 +47,7 @@ class Login extends React.Component {
     showError() {
         this.toast.show({severity:'error', summary: 'Error', detail: this.state.messageError , life: 3000});
     }
+
     render() {
         return (
             <React.Fragment>
@@ -53,7 +55,7 @@ class Login extends React.Component {
                     <Toast ref={(el) => this.toast = el} />
                     <div className="topnav">
                         <div>
-                            <Button label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
+                            <Button onClick={() => this.props.history.push("/")} label="Voltar Para Home" icon="pi pi-angle-left" className="p-button-text p-button-plain p-mt-3 p-ml-3 p-button-lg"/>
                         </div>
                     </div>
 

@@ -11,6 +11,7 @@ class ImageController {
 
   async index({params, response}){
     const image = await Image.findByOrFail('user_id', params.id);
+    
     return image;
   }
     /**

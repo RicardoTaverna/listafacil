@@ -34,7 +34,7 @@ class Home extends React.Component {
             listname:'',
             listcreatedAt: '',
             img: '',
-            imgSrc: '',
+
         }
  
         this.uf = [
@@ -84,8 +84,9 @@ class Home extends React.Component {
     componentDidMount(){
         this.onLogin();
         this.onList();
+        
     }
-
+    
     onList = async e => {
         try {
             api.get('/list').then((response) => {
@@ -123,13 +124,7 @@ class Home extends React.Component {
                 })
                 api.get(`/user/images/${this.state.id}`).then((response) => {
                     this.setState(
-                        {img: response.data.path},
-                        () => {
-                            api.get(`/images/${this.state.img}`).then((response) => {
-                                console.log(response);
-                            })
-                        }
-                        
+                        {img: 'http://127.0.0.1:3333/images/'+response.data.path},  
                     )
                 })
             })
@@ -160,11 +155,12 @@ class Home extends React.Component {
     showMessageError() {
         this.toast.show({severity:'error', summary: 'Erro ao atualizar os dados', detail: this.messageError , life: 3000});
     }
+
     onToastUpload() {
         this.toast.show({severity: 'info', summary: 'Success', detail: 'File Uploaded with Basic Mode'});
     }
 
-    updateImage = (event) =>{
+    updateImage = (event) => {
         
         let { id } = this.state;
         
@@ -183,18 +179,18 @@ class Home extends React.Component {
         try {
             if(this.state.img){
                 api.put(`/user/${id}/images/`, data, config);
+                window.location.reload(true)
                 this.onToastUpload()
             }else{
                 api.post(`/user/${id}/images/`, data, config);
+                window.location.reload(true)
                 this.onToastUpload()
             }
-            
-            
 
         } catch (err) {
             console.log(err)
         }
-
+        
     }
     
     render () {
@@ -222,7 +218,10 @@ class Home extends React.Component {
                 </Link>
             </span>
         );
-
+        
+        const imagemPerfil = (
+            <img src={this.state.img ? this.state.img : perfilImg} alt="profile" className="profile-avatar p-shadow-10"/>
+        );
 
         return (
             <React.Fragment>
@@ -240,7 +239,7 @@ class Home extends React.Component {
                     <div className="p-col-12 p-md-5 p-lg-5 profile-container">
                         <div className="profile-card-right">
                             <div className="profile-image">
-                                <img src={perfilImg} alt="profile" className="profile-avatar p-shadow-10"/>
+                                {imagemPerfil}
                                 <FileUpload mode="basic" name="image[]" customUpload  accept="image/*" maxFileSize={1000000} uploadHandler={this.updateImage} />
                             </div>
                             <div className="p-d-flex p-mt-4 p-text-center">
