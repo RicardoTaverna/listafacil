@@ -93,5 +93,17 @@ $ docker-compose up --build
 # o banco de dados iniciara 0.0.0.0:3060
 ```
 
+#### Executar Frontend
+```bash
+
+# Acessar a pasta /frontend
+$ cd frontend/
+
+# inicializar docker
+$ docker-compose up --build
+
+# o servidor web iniciará 0.0.0.0:3000
+```
+
 ## Endpoints
 A documentação no padrão OpenAPI você encontra [aqui](/backend/docs/documentation.yml)
